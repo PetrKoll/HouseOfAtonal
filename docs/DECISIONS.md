@@ -25,3 +25,14 @@ the previous one.
 - Consequence: Unreal sessions should begin with prepared inputs and defined
   decisions.
 
+## D-003 — Start the house as a parametric proportion blockout
+
+- Date: 2026-07-25
+- Status: provisional
+- Decision: Build v01 from editable metre-based primitives and keep the
+  generating Blender Python script in Git.
+- Reason: The presentation board communicates spatial intent but its drawings
+  are not sufficiently dimensioned for an accurate final model.
+- Consequence: v01 is suitable for proportion review only. Dimensions,
+  partitions, openings and circulation must be revised when better plans or
+  explicit design decisions are available.

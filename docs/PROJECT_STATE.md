@@ -10,9 +10,9 @@ presentation and a complete portfolio case study, not a game demo.
 
 ## Current phase
 
-Phase 01 — Preproduction
+Phase 01 — Preproduction / early architectural blockout
 
-Status: project setup and shared cross-computer workflow.
+Status: first parametric house blockout created for proportion review.
 
 ## Working principles
 
@@ -27,19 +27,22 @@ Status: project setup and shared cross-computer workflow.
 - GitHub repository created and cloned.
 - Shared repository-memory system established.
 - Initial visual references added under `res/` by the user.
+- Created `HouseOfAtonal_blockout_v01.blend`, its repeatable Blender Python
+  generator and a verified preview render.
 
 ## In progress
 
-- Turning the production roadmap into repository documentation.
+- Reviewing inferred house proportions and façade intent.
 - Defining the product, experience flow and art direction.
 
 ## Next actions
 
-1. Add the existing production roadmap to the repository.
-2. Write the one-page product definition.
-3. Define the complete experience flow.
-4. Review and categorize the images currently in `res/`.
-5. Create the prioritized asset list and technical constraints for Quest 3.
+1. Review blockout v01 in Blender and confirm overall footprint, floor heights,
+   courtyard size and which elevation is the street façade.
+2. Obtain dimensioned plans or define design dimensions.
+3. Add interior partitions, stairs, openings and basement in blockout v02.
+4. Add the existing production roadmap to the repository.
+5. Write the one-page product definition and complete experience flow.
 
 ## Blockers
 
@@ -51,10 +54,11 @@ None recorded.
 - Lighting strategy and feasibility of time-of-day changes.
 - Vegetation, weather and seasonal variants within the performance budget.
 - Scope growth before an MVP is defined.
+- Current architectural dimensions are inferred from a 1536 × 1024 concept
+  board and are not suitable for construction-level accuracy.
 
 ## Handoff note
 
 Before continuing on either computer, pull the latest changes and read this
 file together with `docs/DECISIONS.md` and the latest entry in
 `docs/SESSION_LOG.md`.
-
