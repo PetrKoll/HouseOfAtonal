@@ -33,6 +33,9 @@ Status: the user is building the architectural model manually in Blender.
   established.
 - Unreal Engine `.gitignore` prepared for generated data, local builds and IDE
   state while keeping project sources and assets versioned.
+- Git LFS configured for Unreal packages and production binary source assets.
+- The active Blender files are stored through Git LFS without rewriting shared
+  history.
 - Initial visual references added under `res/` by the user.
 - Created `HouseOfAtonal_blockout_v01.blend`, its repeatable Blender Python
   generator and a verified preview render.
@@ -52,8 +55,8 @@ Status: the user is building the architectural model manually in Blender.
 3. Add interior partitions, stairs, openings and basement.
 4. Add the existing production roadmap to the repository.
 5. Write the one-page product definition and complete experience flow.
-6. Define and enable the Git LFS policy before adding Unreal binary assets.
-7. Create the initial Unreal project skeleton on the workstation.
+6. Create the initial C++ Unreal project skeleton on the workstation.
+7. Configure OpenXR and the Meta Quest 3 development baseline.
 
 ## Blockers
 

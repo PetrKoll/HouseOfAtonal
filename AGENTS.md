@@ -8,11 +8,14 @@ the only source of context.
 
 1. Run `git status` and do not overwrite uncommitted user work.
 2. Pull the latest committed changes before starting when the worktree is clean.
+   If Git LFS is not initialized for a fresh clone, run `git lfs install`
+   before pulling binary assets.
 3. Read, in this order:
    - `docs/AGENT_IDENTITIES.md`
    - `docs/PROJECT_STATE.md`
    - `docs/DECISIONS.md`
    - `docs/SESSION_LOG.md` (latest entry)
+   - `docs/SOURCE_CONTROL.md` when changing tracked asset types or Git setup
 4. Inspect the files relevant to the current task.
 5. Confirm that the requested work does not conflict with an existing decision.
 

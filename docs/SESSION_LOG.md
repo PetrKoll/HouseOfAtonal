@@ -58,3 +58,13 @@ Keep entries short. This is a chronological index; the current truth belongs in
   project documentation.
 - Reserved the laptop Codex identity for a different tag of its own choosing.
 - Next: configure Git LFS before creating the Unreal project skeleton.
+
+## 2026-07-26 — [FORGE] Git LFS configured
+
+- Initialized Git LFS for the workstation clone.
+- Added LFS rules for Unreal packages and production binary source formats.
+- Converted the current Blender revisions to LFS without rewriting history.
+- Recorded the per-computer setup and recovery procedure.
+- Confirmed that the Unreal skeleton will be created as a C++ project.
+- Next: verify the Unreal Engine and C++ toolchain versions, then create the
+  initial project skeleton.

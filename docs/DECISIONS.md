@@ -75,3 +75,28 @@ the previous one.
   documentation entry when work moves between two computers and chat sessions.
 - Consequence: All future session-log entries, decisions, project-state updates
   and other persistent authored notes carry the responsible Codex tag.
+
+## D-007 — Store production binary assets with Git LFS
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Track Unreal packages, Blender sources, interchange assets,
+  high-resolution source imagery, production audio and video through Git LFS
+  according to `.gitattributes`.
+- Reason: These binary files do not benefit from normal Git diffs and would
+  rapidly increase clone size when revised during production.
+- Consequence: Git LFS is a prerequisite on both computers. Existing Blender
+  history is not rewritten; current and future Blender revisions use LFS.
+
+## D-008 — Start the Unreal project as C++
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Create the initial Unreal project as a C++ project rather than a
+  Blueprint-only project.
+- Reason: The user expects to build custom C++ classes collaboratively from the
+  beginning.
+- Consequence: The workstation needs the supported C++ toolchain configured
+  before the project skeleton is generated and validated.
