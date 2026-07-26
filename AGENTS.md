@@ -9,6 +9,7 @@ the only source of context.
 1. Run `git status` and do not overwrite uncommitted user work.
 2. Pull the latest committed changes before starting when the worktree is clean.
 3. Read, in this order:
+   - `docs/AGENT_IDENTITIES.md`
    - `docs/PROJECT_STATE.md`
    - `docs/DECISIONS.md`
    - `docs/SESSION_LOG.md` (latest entry)
@@ -18,6 +19,10 @@ the only source of context.
 ## During work
 
 - Keep changes focused and preserve unrelated work.
+- Use the permanent author tag registered for this computer in
+  `docs/AGENT_IDENTITIES.md` on every new persistent documentation entry.
+- Never reuse another computer's author tag. A Codex working on a new computer
+  must choose a short unique tag and register it before writing project memory.
 - Record durable product or technical decisions in `docs/DECISIONS.md`.
 - Keep `docs/PROJECT_STATE.md` concise and current. It is a handoff, not a diary.
 - Never store passwords, access tokens, API keys, private client data, or other

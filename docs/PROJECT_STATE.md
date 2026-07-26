@@ -1,6 +1,7 @@
 # Project State
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
+Last updated by: [FORGE]
 
 ## Project
 
@@ -28,6 +29,8 @@ Status: the user is building the architectural model manually in Blender.
 - Shared repository-memory system established.
 - Cross-computer pull/push workflow verified on both development computers.
 - Standing end-of-session documentation, commit and push workflow established.
+- Persistent documentation author tags and a cross-computer identity registry
+  established.
 - Unreal Engine `.gitignore` prepared for generated data, local builds and IDE
   state while keeping project sources and assets versioned.
 - Initial visual references added under `res/` by the user.

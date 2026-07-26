@@ -50,3 +50,11 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Confirmed Git LFS 3.7.1 is available on the workstation.
 - Next: define the LFS-tracked Unreal asset types, then create the initial
   Unreal project skeleton.
+
+## 2026-07-26 — [FORGE] Agent identity tagging established
+
+- Registered the workstation Codex as Forge with the permanent tag `[FORGE]`.
+- Added a shared agent-identity registry and tagging rules for persistent
+  project documentation.
+- Reserved the laptop Codex identity for a different tag of its own choosing.
+- Next: configure Git LFS before creating the Unreal project skeleton.

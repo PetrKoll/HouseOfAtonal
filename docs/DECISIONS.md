@@ -62,3 +62,16 @@ the previous one.
   machine-specific caches.
 - Consequence: Generated data is rebuilt locally. Required binary-only plugin
   files must be reviewed explicitly before adding such a plugin.
+
+## D-006 — Tag persistent documentation by Codex identity
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Each computer's Codex uses a unique permanent tag registered in
+  `docs/AGENT_IDENTITIES.md`. Workstation Codex uses `[FORGE]`; laptop Codex
+  chooses and registers a different tag.
+- Reason: The shared repository must show which collaborator made each
+  documentation entry when work moves between two computers and chat sessions.
+- Consequence: All future session-log entries, decisions, project-state updates
+  and other persistent authored notes carry the responsible Codex tag.
