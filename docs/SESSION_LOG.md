@@ -23,3 +23,10 @@ Keep entries short. This is a chronological index; the current truth belongs in
   `blender/README.md`.
 - Next: review proportions and elevation orientation before adding detailed
   plans, stairs, openings and basement.
+
+## 2026-07-26 — User-authored Blender model added
+
+- Added `blender/house_A.blend` as the active architectural model.
+- Added `res/blueprint.png` as its plan reference.
+- Marked the earlier generated blockout as an experiment, not the current
+  architectural source.

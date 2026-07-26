@@ -12,7 +12,7 @@ presentation and a complete portfolio case study, not a game demo.
 
 Phase 01 — Preproduction / early architectural blockout
 
-Status: first parametric house blockout created for proportion review.
+Status: the user is building the architectural model manually in Blender.
 
 ## Working principles
 
@@ -29,18 +29,20 @@ Status: first parametric house blockout created for proportion review.
 - Initial visual references added under `res/` by the user.
 - Created `HouseOfAtonal_blockout_v01.blend`, its repeatable Blender Python
   generator and a verified preview render.
+- Added the user's current manual model as `blender/house_A.blend` and its plan
+  reference as `res/blueprint.png`.
 
 ## In progress
 
-- Reviewing inferred house proportions and façade intent.
+- Developing the house geometry in `blender/house_A.blend`.
 - Defining the product, experience flow and art direction.
 
 ## Next actions
 
-1. Review blockout v01 in Blender and confirm overall footprint, floor heights,
-   courtyard size and which elevation is the street façade.
-2. Obtain dimensioned plans or define design dimensions.
-3. Add interior partitions, stairs, openings and basement in blockout v02.
+1. Continue the manual model in `blender/house_A.blend`.
+2. Resolve architectural dimensions and stair geometry from human-scale design
+   requirements and the available plan.
+3. Add interior partitions, stairs, openings and basement.
 4. Add the existing production roadmap to the repository.
 5. Write the one-page product definition and complete experience flow.
 
@@ -56,6 +58,12 @@ None recorded.
 - Scope growth before an MVP is defined.
 - Current architectural dimensions are inferred from a 1536 × 1024 concept
   board and are not suitable for construction-level accuracy.
+
+## Current Blender source
+
+`blender/house_A.blend` is the active user-authored house model. The older
+`HouseOfAtonal_blockout_v01.blend` is retained only as an experiment and must
+not be treated as the architectural source of truth.
 
 ## Handoff note
 
