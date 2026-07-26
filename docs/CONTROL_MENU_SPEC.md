@@ -4,6 +4,23 @@ Author: [FORGE]
 Status: first approved behavior draft
 Last updated: 2026-07-26
 
+## Implementation status
+
+The first C++ greybox foundation is compiled:
+
+- world-space actor and widget component
+- delayed relative position and yaw following
+- XR-pawn spawn/toggle component
+- shared hover, expand, pin and outside-dismiss state
+
+Still pending in the Unreal Editor:
+
+- Blueprint widget visuals
+- connection to `BP_XRPawn`
+- right-trigger input binding
+- ray and direct-touch event wiring
+- headset tuning
+
 ## Terminology
 
 ### Menu Level

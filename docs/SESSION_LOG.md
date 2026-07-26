@@ -103,3 +103,16 @@ Keep entries short. This is a chronological index; the current truth belongs in
   and yaw with tunable damping.
 - Next: tune follow lag, maximum separation and comfort in the headset during
   the greybox menu prototype.
+
+## 2026-07-26 — [FORGE] Control Menu C++ greybox foundation
+
+- Added an XR-pawn component that spawns, toggles and dismisses the Control Menu
+  along a supplied controller ray.
+- Added a world-space menu actor with tunable damped position/yaw following and
+  accelerated catch-up beyond a comfortable separation.
+- Added a Blueprint widget base with consistent hover, expansion, category
+  pinning and outside-click dismissal state.
+- Bound widget dismissal to actual menu actor cleanup.
+- Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8.
+- Next: create the Blueprint widget, connect it to `BP_XRPawn`, wire input and
+  test the greybox interaction in the headset.

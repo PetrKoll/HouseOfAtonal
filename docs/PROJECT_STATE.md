@@ -46,6 +46,8 @@ compiled C++ foundation, and architectural blockout work can begin.
   approved and documented.
 - Control Menu follow behavior defined as a delayed, damped relative anchor to
   the user rather than fixed world-space or head-locked UI.
+- First Control Menu C++ greybox foundation compiled successfully, including
+  spawn/toggle ownership, delayed following and shared radial interaction state.
 - Initial visual references added under `res/` by the user.
 - Created `HouseOfAtonal_blockout_v01.blend`, its repeatable Blender Python
   generator and a verified preview render.
@@ -71,9 +73,12 @@ compiled C++ foundation, and architectural blockout work can begin.
 7. Create the first project-owned blockout map under `Content/HouseOfAtonal`.
 8. Define the first three destinations and their arrival points.
 9. Define the initial weather, time and house-state option sets.
-10. Build a greybox Control Menu interaction prototype.
-11. Record exact versions of Ultra Dynamic Sky and other local dependencies.
-12. Connect approved weather and time behavior to Ultra Dynamic Sky.
+10. Create the Blueprint Control Menu widget and connect the compiled component
+    to `BP_XRPawn`.
+11. Wire right-trigger, controller ray and direct-touch events.
+12. Test spawn placement, delayed following and category behavior in headset.
+13. Record exact versions of Ultra Dynamic Sky and other local dependencies.
+14. Connect approved weather and time behavior to Ultra Dynamic Sky.
 
 ## Blockers
 

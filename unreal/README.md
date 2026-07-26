@@ -27,6 +27,21 @@ It exposes state and change events to Blueprints. Concrete level loading, menu
 behavior and Ultra Dynamic Sky integration remain separate adapters and will be
 implemented after their functional behavior is approved.
 
+## Control Menu foundation
+
+The first compiled Control Menu layer contains:
+
+- `UHouseControlMenuComponent`: spawn, toggle and dismiss ownership for the XR
+  pawn
+- `AHouseControlMenuActor`: world-space widget host with delayed relative
+  following
+- `UHouseControlMenuWidget`: shared hover, expansion, pinning and outside-click
+  state rules for Blueprint visuals
+
+The next editor step is to create a Blueprint widget subclass, add the component
+to `BP_XRPawn`, and connect the right-trigger input plus controller pointer and
+HMD follow transforms.
+
 ## Editor build
 
 From a developer command prompt:
