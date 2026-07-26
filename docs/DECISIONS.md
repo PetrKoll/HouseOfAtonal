@@ -138,3 +138,63 @@ the previous one.
   do not define interaction, transitions, persistence or failure behavior.
 - Consequence: Architectural blockout and neutral systems may proceed first;
   UI implementation waits for the requested specification.
+
+## D-012 — Separate Menu Level from Control Menu terminology
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: `Menu Level` means the initial overhead house-and-context
+  environment. `Control Menu` means the user-summoned circular spatial
+  interface for destination, weather, time and house controls.
+- Reason: Both concepts were previously called menu despite having different
+  runtime and design responsibilities.
+- Consequence: Code, assets and documentation use the two explicit terms.
+
+## D-013 — Use a transient radial spatial Control Menu
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Spawn the Control Menu along the right-controller pointing
+  direction. Category circles expand on hover, can be pinned by their center
+  icon, support ray and direct touch, and close on an outside click.
+- Reason: This matches the approved circular interface concept and keeps the
+  controls accessible from any experience location.
+- Consequence: Menu placement and dimensions remain tunable VR parameters.
+  Detailed behavior is recorded in `docs/CONTROL_MENU_SPEC.md`.
+
+## D-014 — Start in one level and split after validation
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Build Menu Level, exterior, interior and atrium in one Unreal level
+  during early development, with fixed arrival points for destination changes.
+  Split or stream content only after behavior and visuals are stable.
+- Reason: One level makes early iteration and transition prototyping faster.
+- Consequence: Systems must avoid hard dependencies that prevent later
+  streaming or level separation.
+
+## D-015 — Reset every experience to curated defaults
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Do not persist location, weather, time or house state between
+  application runs.
+- Reason: The product is a one-time curated presentation experience.
+- Consequence: Every run begins in the Menu Level with predefined state.
+
+## D-016 — Blend environment changes and target a particle world transition
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Blend time and weather changes. Target a destination transition in
+  which the world breaks into particles and reforms, with a cheaper dissolve or
+  fade fallback if required on standalone Quest 3.
+- Reason: Smooth environmental change and a transformative move between places
+  are central parts of the presentation concept.
+- Consequence: Transition development is staged and profiled before the full
+  effect becomes a production dependency.

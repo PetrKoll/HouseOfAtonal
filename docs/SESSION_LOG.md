@@ -80,3 +80,17 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8.
 - Next: restart the editor, create the first project-owned blockout map and ask
   for the detailed menu behavior before UI implementation.
+
+## 2026-07-26 — [FORGE] Control Menu behavior defined
+
+- Distinguished the initial overhead Menu Level from the summoned Control Menu.
+- Defined right-controller spawning, circular hover expansion, pinning,
+  outside-click closing and ray/direct-touch interaction.
+- Defined fixed destination points, blended weather and time changes, and
+  transient curated session state.
+- Recorded house controls for lights, doors, curtains and later presentation
+  states.
+- Accepted a particle breakup/reformation transition as the target, subject to
+  standalone Quest 3 profiling and a cheaper fallback.
+- Next: define the first option sets and arrival points, then build the greybox
+  Menu Level and Control Menu interaction prototype.

@@ -42,6 +42,8 @@ compiled C++ foundation, and architectural blockout work can begin.
 - Project-owned `Content/HouseOfAtonal` namespace and initial experience-state
   subsystem established.
 - Local Marketplace content separated from version-controlled project assets.
+- Menu Level and spatial Control Menu terminology and first functional behavior
+  approved and documented.
 - Initial visual references added under `res/` by the user.
 - Created `HouseOfAtonal_blockout_v01.blend`, its repeatable Blender Python
   generator and a verified preview render.
@@ -52,7 +54,8 @@ compiled C++ foundation, and architectural blockout work can begin.
 
 - Developing the house geometry in `blender/house_A.blend`.
 - Beginning the Unreal architectural and environment blockout.
-- Defining the menu behavior, experience flow and art direction.
+- Preparing the initial fixed destinations and blockout for the Menu Level,
+  exterior, interior and atrium.
 
 ## Next actions
 
@@ -64,9 +67,11 @@ compiled C++ foundation, and architectural blockout work can begin.
 5. Write the one-page product definition and complete experience flow.
 6. Restart the editor so it loads the newly compiled C++ module.
 7. Create the first project-owned blockout map under `Content/HouseOfAtonal`.
-8. Record exact versions of Ultra Dynamic Sky and other local dependencies.
-9. Obtain the detailed menu behavior from the user before implementing UI.
-10. Connect approved weather and time behavior to Ultra Dynamic Sky.
+8. Define the first three destinations and their arrival points.
+9. Define the initial weather, time and house-state option sets.
+10. Build a greybox Control Menu interaction prototype.
+11. Record exact versions of Ultra Dynamic Sky and other local dependencies.
+12. Connect approved weather and time behavior to Ultra Dynamic Sky.
 
 ## Blockers
 
