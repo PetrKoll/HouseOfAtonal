@@ -48,3 +48,17 @@ the previous one.
 - Consequence: Start sessions with a clean-state check and pull. End sessions
   with current handoff notes, a focused commit, a successful push and a report
   of any work that remains uncommitted.
+
+## D-005 — Version Unreal sources, not generated machine data
+
+- Date: 2026-07-26
+- Status: accepted
+- Decision: Keep the Unreal project descriptor, `Config/`, `Content/`,
+  `Source/`, `Build/` and required project plugins in Git. Ignore generated
+  `Binaries/`, `DerivedDataCache/`, `Intermediate/`, `Saved/`, IDE state,
+  profiling data and local packaging output.
+- Reason: The workstation will build and run Unreal while the laptop must still
+  receive the durable project sources, assets and configuration without large
+  machine-specific caches.
+- Consequence: Generated data is rebuilt locally. Required binary-only plugin
+  files must be reviewed explicitly before adding such a plugin.

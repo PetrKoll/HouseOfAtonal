@@ -40,3 +40,13 @@ Keep entries short. This is a chronological index; the current truth belongs in
   at the end of every meaningful session.
 - Next: prepare the Unreal Engine `.gitignore` and Git LFS policy before adding
   the Unreal project.
+
+## 2026-07-26 — Unreal ignore policy prepared
+
+- Expanded `.gitignore` for Unreal Engine, Visual Studio, Rider, Xcode, Blender
+  recovery files and common operating-system metadata.
+- Verified that generated Unreal directories are ignored while `.uproject`,
+  `Config/`, `Content/`, `Source/` and `Build/` remain versionable.
+- Confirmed Git LFS 3.7.1 is available on the workstation.
+- Next: define the LFS-tracked Unreal asset types, then create the initial
+  Unreal project skeleton.

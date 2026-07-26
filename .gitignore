@@ -1,2 +1,65 @@
+# ---------------------------------------------------------------------------
+# Operating systems
+# ---------------------------------------------------------------------------
 .DS_Store
+._*
+.Spotlight-V100/
+.Trashes/
+Thumbs.db
+Desktop.ini
+
+# ---------------------------------------------------------------------------
+# Editors and IDEs
+# ---------------------------------------------------------------------------
+.vs/
+.vscode/
+.idea/
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.code-workspace
+
+# ---------------------------------------------------------------------------
+# Unreal Engine generated files
+#
+# Keep the project descriptor, Config/, Content/, Source/, Build/ and required
+# project Plugins/ in Git. The directories below are regenerated locally.
+# ---------------------------------------------------------------------------
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Unreal-generated project files
+*.xcodeproj
+*.xcworkspace
+*.xcuserdata
+*.xcuserstate
+*.xcscmblueprint
+
+# Local build and packaging output
+Builds/
+StagedBuilds/
+Packaged/
+
+# Unreal crash reports and profiling captures
+Crashes/
+Profiling/
+
+# ---------------------------------------------------------------------------
+# Blender local recovery and temporary files
+# ---------------------------------------------------------------------------
 *.blend1
+*.blend2
+*.blend@
+
+# ---------------------------------------------------------------------------
+# General temporary files
+# ---------------------------------------------------------------------------
+*.tmp
+*.temp
+*.log
+~$*
