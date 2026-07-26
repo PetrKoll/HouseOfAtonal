@@ -44,6 +44,8 @@ compiled C++ foundation, and architectural blockout work can begin.
 - Local Marketplace content separated from version-controlled project assets.
 - Menu Level and spatial Control Menu terminology and first functional behavior
   approved and documented.
+- Control Menu follow behavior defined as a delayed, damped relative anchor to
+  the user rather than fixed world-space or head-locked UI.
 - Initial visual references added under `res/` by the user.
 - Created `HouseOfAtonal_blockout_v01.blend`, its repeatable Blender Python
   generator and a verified preview render.

@@ -94,3 +94,12 @@ Keep entries short. This is a chronological index; the current truth belongs in
   standalone Quest 3 profiling and a cheaper fallback.
 - Next: define the first option sets and arrival points, then build the greybox
   Menu Level and Control Menu interaction prototype.
+
+## 2026-07-26 — [FORGE] Control Menu follow behavior defined
+
+- Chose a delayed relative follow model instead of fixed world-space or
+  head-locked placement.
+- The menu preserves its summon offset and smoothly follows user translation
+  and yaw with tunable damping.
+- Next: tune follow lag, maximum separation and comfort in the headset during
+  the greybox menu prototype.

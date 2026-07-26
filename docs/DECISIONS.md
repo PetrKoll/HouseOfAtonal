@@ -198,3 +198,17 @@ the previous one.
   are central parts of the presentation concept.
 - Consequence: Transition development is staged and profiled before the full
   effect becomes a production dependency.
+
+## D-017 — Use delayed relative following for the Control Menu
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: After spawning, the Control Menu preserves its approximate relative
+  offset from the user and follows translation and yaw with a small damped
+  delay. It is neither fixed permanently in world space nor rigidly head-locked.
+- Reason: The menu should remain accessible as the user moves while retaining
+  spatial weight and the placement established when it was summoned.
+- Consequence: Position lag, rotation lag, maximum separation and catch-up
+  behavior are exposed as VR-tunable parameters. HMD pitch and roll do not tilt
+  the menu.

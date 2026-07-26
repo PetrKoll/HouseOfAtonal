@@ -43,8 +43,15 @@ circles, category icons and contextual option icons.
 - The menu appears along the direction in which the right controller points.
 - Distance from the user is a tunable parameter and must be tested in VR.
 - The menu faces the user when spawned.
-- Exact placement constraints, collision behavior and comfortable distance are
-  intentionally not fixed yet.
+- At spawn time, the menu records its relative horizontal offset from the user.
+- As the user moves or turns, the menu follows the corresponding target offset
+  with a small damped delay rather than moving instantly.
+- The delayed movement should preserve the menu's approximate original
+  relative placement while still feeling like a world-space object with weight.
+- Position and facing direction interpolate smoothly. HMD pitch and roll do not
+  tilt the menu.
+- Follow lag, comfortable distance, maximum allowed separation and collision
+  behavior are tunable parameters that must be tested in VR.
 
 ## Interaction
 
@@ -139,6 +146,8 @@ The subsystem is reset to the curated defaults at the beginning of every run.
 ## Parameters requiring headset testing
 
 - spawn distance
+- positional and rotational follow lag
+- maximum separation before accelerated catch-up
 - menu angular and physical size
 - hover expansion amount
 - hover dwell and collapse delay
@@ -155,4 +164,4 @@ The subsystem is reset to the curated defaults at the beginning of every run.
 - the first house-state controls
 - final icon set and labels
 - confirmation of right-trigger input
-- preferred menu orientation behavior when the user moves after spawning it
+- collision and occlusion behavior while the menu follows the user
