@@ -68,3 +68,15 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Confirmed that the Unreal skeleton will be created as a C++ project.
 - Next: verify the Unreal Engine and C++ toolchain versions, then create the
   initial project skeleton.
+
+## 2026-07-26 — [FORGE] Unreal C++ foundation established
+
+- Found the user-created UE 5.8 VR template and confirmed headset preview works.
+- Converted the Blueprint-only project to a compiled `HouseOfAtonal` C++ module.
+- Added a Blueprint-accessible experience subsystem for location, weather and
+  time-of-day state without coupling it to UI or Ultra Dynamic Sky.
+- Reserved `Content/HouseOfAtonal` for project-owned assets.
+- Excluded more than 2.2 GB of reinstallable Marketplace content from Git.
+- Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8.
+- Next: restart the editor, create the first project-owned blockout map and ask
+  for the detailed menu behavior before UI implementation.

@@ -11,9 +11,10 @@ presentation and a complete portfolio case study, not a game demo.
 
 ## Current phase
 
-Phase 01 — Preproduction / early architectural blockout
+Phase 01 — Unreal foundation / early architectural blockout
 
-Status: the user is building the architectural model manually in Blender.
+Status: the UE 5.8 VR template runs with the headset, the project now has a
+compiled C++ foundation, and architectural blockout work can begin.
 
 ## Working principles
 
@@ -36,6 +37,11 @@ Status: the user is building the architectural model manually in Blender.
 - Git LFS configured for Unreal packages and production binary source assets.
 - The active Blender files are stored through Git LFS without rewriting shared
   history.
+- UE 5.8 VR template created and headset preview verified by the user.
+- Project converted from Blueprint-only to a compiled C++ project.
+- Project-owned `Content/HouseOfAtonal` namespace and initial experience-state
+  subsystem established.
+- Local Marketplace content separated from version-controlled project assets.
 - Initial visual references added under `res/` by the user.
 - Created `HouseOfAtonal_blockout_v01.blend`, its repeatable Blender Python
   generator and a verified preview render.
@@ -45,7 +51,8 @@ Status: the user is building the architectural model manually in Blender.
 ## In progress
 
 - Developing the house geometry in `blender/house_A.blend`.
-- Defining the product, experience flow and art direction.
+- Beginning the Unreal architectural and environment blockout.
+- Defining the menu behavior, experience flow and art direction.
 
 ## Next actions
 
@@ -55,8 +62,11 @@ Status: the user is building the architectural model manually in Blender.
 3. Add interior partitions, stairs, openings and basement.
 4. Add the existing production roadmap to the repository.
 5. Write the one-page product definition and complete experience flow.
-6. Create the initial C++ Unreal project skeleton on the workstation.
-7. Configure OpenXR and the Meta Quest 3 development baseline.
+6. Restart the editor so it loads the newly compiled C++ module.
+7. Create the first project-owned blockout map under `Content/HouseOfAtonal`.
+8. Record exact versions of Ultra Dynamic Sky and other local dependencies.
+9. Obtain the detailed menu behavior from the user before implementing UI.
+10. Connect approved weather and time behavior to Ultra Dynamic Sky.
 
 ## Blockers
 
@@ -68,6 +78,8 @@ None recorded.
 - Lighting strategy and feasibility of time-of-day changes.
 - Vegetation, weather and seasonal variants within the performance budget.
 - Scope growth before an MVP is defined.
+- Git LFS storage pressure if Marketplace libraries are committed.
+- Ultra Dynamic Sky performance and feature parity on standalone Quest 3.
 - Current architectural dimensions are inferred from a 1536 × 1024 concept
   board and are not suitable for construction-level accuracy.
 

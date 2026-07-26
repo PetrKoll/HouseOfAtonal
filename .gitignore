@@ -63,3 +63,13 @@ Profiling/
 *.temp
 *.log
 ~$*
+
+# ---------------------------------------------------------------------------
+# House of Atonal local Marketplace content
+#
+# Install these packs locally through Epic/Marketplace. Project-owned assets
+# must live under Content/HouseOfAtonal and remain versioned.
+# ---------------------------------------------------------------------------
+/unreal/HouseOfAtonal/Content/FogArea/
+/unreal/HouseOfAtonal/Content/Megaplant_Library/
+/unreal/HouseOfAtonal/Content/UltraDynamicSky/

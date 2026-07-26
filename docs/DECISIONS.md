@@ -100,3 +100,41 @@ the previous one.
   beginning.
 - Consequence: The workstation needs the supported C++ toolchain configured
   before the project skeleton is generated and validated.
+
+## D-009 — Keep Marketplace packages local
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Keep Ultra Dynamic Sky, Megaplant Library and Fog Area out of Git.
+  Store all project-owned assets under `Content/HouseOfAtonal` and integrate
+  vendor content through child assets or adapters.
+- Reason: The local vendor content currently exceeds 2.2 GB and would consume
+  shared LFS storage while remaining reinstallable from its original source.
+- Consequence: A replacement Unreal workstation must reinstall the documented
+  dependencies. Vendor assets must not be modified directly.
+
+## D-010 — Centralize experience state without vendor coupling
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Use a C++ game-instance subsystem as the stable state boundary for
+  location, weather and time-of-day selections. Keep level loading, UI and
+  Ultra Dynamic Sky control in separate integrations.
+- Reason: Menu behavior and vendor APIs will evolve independently from the
+  product's core experience state.
+- Consequence: Blueprints request changes through the subsystem and listen to
+  its events. The subsystem itself does not directly reference vendor assets.
+
+## D-011 — Require menu behavior specification before UI implementation
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Ask the user for the detailed functional behavior of the VR menu
+  immediately before implementing it.
+- Reason: The visual references communicate style and high-level controls but
+  do not define interaction, transitions, persistence or failure behavior.
+- Consequence: Architectural blockout and neutral systems may proceed first;
+  UI implementation waits for the requested specification.
