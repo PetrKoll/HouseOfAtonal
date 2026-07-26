@@ -33,7 +33,9 @@ the only source of context.
 2. Append a short dated entry to `docs/SESSION_LOG.md`.
 3. Update `docs/DECISIONS.md` if a durable decision was made.
 4. Verify the changed files and report any uncommitted work.
-5. Commit and push only when the user has requested or approved publishing.
+5. Update the handoff documentation, commit all intended session changes and
+   push them at the end of every meaningful session. The user granted standing
+   approval for this cross-computer synchronization workflow on 2026-07-26.
 
 ## Source-of-truth rules
 

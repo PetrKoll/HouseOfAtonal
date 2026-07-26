@@ -26,6 +26,8 @@ Status: the user is building the architectural model manually in Blender.
 
 - GitHub repository created and cloned.
 - Shared repository-memory system established.
+- Cross-computer pull/push workflow verified on both development computers.
+- Standing end-of-session documentation, commit and push workflow established.
 - Initial visual references added under `res/` by the user.
 - Created `HouseOfAtonal_blockout_v01.blend`, its repeatable Blender Python
   generator and a verified preview render.
@@ -45,6 +47,8 @@ Status: the user is building the architectural model manually in Blender.
 3. Add interior partitions, stairs, openings and basement.
 4. Add the existing production roadmap to the repository.
 5. Write the one-page product definition and complete experience flow.
+6. Prepare the Unreal Engine `.gitignore` and Git LFS policy before adding the
+   Unreal project.
 
 ## Blockers
 

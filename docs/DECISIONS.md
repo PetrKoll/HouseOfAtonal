@@ -36,3 +36,15 @@ the previous one.
 - Consequence: v01 is suitable for proportion review only. Dimensions,
   partitions, openings and circulation must be revised when better plans or
   explicit design decisions are available.
+
+## D-004 — End every meaningful session with a Git handoff
+
+- Date: 2026-07-26
+- Status: accepted
+- Decision: At the end of every meaningful session, update the shared project
+  memory, commit the intended changes and push them to GitHub.
+- Reason: The project is developed on two computers and each new session must
+  be able to continue from the repository without relying on chat history.
+- Consequence: Start sessions with a clean-state check and pull. End sessions
+  with current handoff notes, a focused commit, a successful push and a report
+  of any work that remains uncommitted.

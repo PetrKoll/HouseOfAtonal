@@ -30,3 +30,13 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Added `res/blueprint.png` as its plan reference.
 - Marked the earlier generated blockout as an experiment, not the current
   architectural source.
+
+## 2026-07-26 — Cross-computer handoff workflow confirmed
+
+- Verified that the repository can be read, written, pulled and pushed from
+  this computer.
+- Synchronized two additional architectural reference images under `res/`.
+- Recorded standing approval to update handoff documentation, commit and push
+  at the end of every meaningful session.
+- Next: prepare the Unreal Engine `.gitignore` and Git LFS policy before adding
+  the Unreal project.
