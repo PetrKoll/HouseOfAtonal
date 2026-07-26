@@ -21,6 +21,7 @@ public class HouseOfAtonal : ModuleRules
 				"EnhancedInput",
 				"HeadMountedDisplay",
 				"InputCore",
+				"SlateCore",
 				"UMG"
 			}
 		);

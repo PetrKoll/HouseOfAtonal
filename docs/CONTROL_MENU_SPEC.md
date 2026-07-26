@@ -40,7 +40,6 @@ controls:
 - destination
 - weather
 - time of day
-- house state
 
 It does not contain a miniature house. Its visual language is composed of
 circles, category icons and contextual option icons.
@@ -116,16 +115,11 @@ circles, category icons and contextual option icons.
   value later.
 - Time transitions blend rather than switching instantly.
 
-### House state
+### Object interaction
 
-House controls trigger presentation changes such as:
-
-- turning lights on or off
-- opening or closing doors
-- opening or closing curtains
-- similar architectural presentation states added later
-
-The first concrete set of house controls remains to be selected.
+House elements such as lights, doors and curtains are not controlled through
+the Control Menu. The user interacts with those objects directly in the
+environment.
 
 ## World organization
 
@@ -178,7 +172,6 @@ The subsystem is reset to the curated defaults at the beginning of every run.
 - the three initial destination names and arrival points
 - the initial weather presets
 - the initial time presets
-- the first house-state controls
 - final icon set and labels
 - confirmation of right-trigger input
 - collision and occlusion behavior while the menu follows the user

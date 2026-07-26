@@ -116,3 +116,19 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8.
 - Next: create the Blueprint widget, connect it to `BP_XRPawn`, wire input and
   test the greybox interaction in the headset.
+
+## 2026-07-26 — [FORGE] Control Menu headset integration and option greybox
+
+- Connected the C++ Control Menu component, right-trigger input and existing
+  right-hand widget interaction to `BP_XRPawn`.
+- Added C++-owned category scaling, pinning, outside-click dismissal and
+  pitch/yaw menu following.
+- Added a generated three-option greybox for Destination, Weather and Time of
+  Day; selections update `UHouseExperienceSubsystem`.
+- Removed House State from the menu. Lights, doors and curtains will use direct
+  interaction with their environment objects.
+- Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8.
+- Known issue: controller-ray hover exit is still not reliable in the headset
+  and requires a deterministic hit-test revision.
+- Next: test the generated option strip, stabilize hover, then replace greybox
+  labels with approved icons and final presets.

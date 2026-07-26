@@ -53,7 +53,11 @@ void AHouseControlMenuActor::Tick(float DeltaSeconds)
 		EffectivePositionSpeed);
 
 	const FVector ToUser = FollowTarget->GetComponentLocation() - NewLocation;
-	const FRotator DesiredRotation(0.0f, ToUser.Rotation().Yaw, 0.0f);
+	const FRotator LookAtRotation = ToUser.Rotation();
+	const FRotator DesiredRotation(
+		LookAtRotation.Pitch,
+		LookAtRotation.Yaw,
+		0.0f);
 	const FRotator NewRotation = FMath::RInterpTo(
 		GetActorRotation(),
 		DesiredRotation,

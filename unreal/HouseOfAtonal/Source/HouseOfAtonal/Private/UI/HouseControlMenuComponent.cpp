@@ -1,8 +1,10 @@
 #include "UI/HouseControlMenuComponent.h"
 
 #include "Components/SceneComponent.h"
+#include "Components/WidgetInteractionComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Engine/World.h"
+#include "InputCoreTypes.h"
 #include "UI/HouseControlMenuActor.h"
 #include "UI/HouseControlMenuWidget.h"
 
@@ -19,6 +21,17 @@ void UHouseControlMenuComponent::ToggleControlMenu(
 {
 	if (IsControlMenuVisible())
 	{
+		if (UWidgetInteractionComponent* WidgetInteraction =
+			FindRightWidgetInteraction())
+		{
+			if (WidgetInteraction->IsOverInteractableWidget())
+			{
+				WidgetInteraction->PressPointerKey(EKeys::LeftMouseButton);
+				WidgetInteraction->ReleasePointerKey(EKeys::LeftMouseButton);
+				return;
+			}
+		}
+
 		HideControlMenu();
 		return;
 	}
@@ -74,6 +87,9 @@ void UHouseControlMenuComponent::ShowControlMenu(
 		if (UHouseControlMenuWidget* MenuWidget =
 			Cast<UHouseControlMenuWidget>(WidgetComponent->GetUserWidgetObject()))
 		{
+			MenuWidget->SetPointerInteraction(
+				FindRightWidgetInteraction(),
+				WidgetComponent);
 			MenuWidget->OnDismissRequested.AddDynamic(
 				this,
 				&UHouseControlMenuComponent::HideControlMenu);
@@ -102,4 +118,27 @@ void UHouseControlMenuComponent::EndPlay(const EEndPlayReason::Type EndPlayReaso
 {
 	HideControlMenu();
 	Super::EndPlay(EndPlayReason);
+}
+
+UWidgetInteractionComponent*
+UHouseControlMenuComponent::FindRightWidgetInteraction() const
+{
+	if (!GetOwner())
+	{
+		return nullptr;
+	}
+
+	TArray<UWidgetInteractionComponent*> Interactions;
+	GetOwner()->GetComponents<UWidgetInteractionComponent>(Interactions);
+
+	for (UWidgetInteractionComponent* Interaction : Interactions)
+	{
+		if (IsValid(Interaction) &&
+			Interaction->GetName().Contains(TEXT("Right")))
+		{
+			return Interaction;
+		}
+	}
+
+	return Interactions.Num() > 0 ? Interactions[0] : nullptr;
 }

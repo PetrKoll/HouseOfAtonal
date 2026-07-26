@@ -6,6 +6,7 @@
 
 class AHouseControlMenuActor;
 class USceneComponent;
+class UWidgetInteractionComponent;
 
 /**
  * Add this component to the XR pawn and call ToggleControlMenu from the right
@@ -45,6 +46,8 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
+	UWidgetInteractionComponent* FindRightWidgetInteraction() const;
+
 	UPROPERTY(EditAnywhere, Category = "House of Atonal|Control Menu")
 	TSubclassOf<AHouseControlMenuActor> MenuActorClass;
 

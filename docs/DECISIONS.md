@@ -212,3 +212,14 @@ the previous one.
 - Consequence: Position lag, rotation lag, maximum separation and catch-up
   behavior are exposed as VR-tunable parameters. HMD pitch and roll do not tilt
   the menu.
+
+## D-018 — Keep house controls out of the Control Menu
+
+- Date: 2026-07-26
+- Author: [FORGE]
+- Status: accepted
+- Decision: Lights, doors, curtains and similar house elements are controlled
+  by direct interaction with objects in the environment, not by a House State
+  category in the Control Menu.
+- Reason: These actions belong spatially to the objects they affect.
+- Consequence: The Control Menu contains Destination, Weather and Time of Day.

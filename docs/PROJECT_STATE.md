@@ -72,13 +72,14 @@ compiled C++ foundation, and architectural blockout work can begin.
 6. Restart the editor so it loads the newly compiled C++ module.
 7. Create the first project-owned blockout map under `Content/HouseOfAtonal`.
 8. Define the first three destinations and their arrival points.
-9. Define the initial weather, time and house-state option sets.
-10. Create the Blueprint Control Menu widget and connect the compiled component
-    to `BP_XRPawn`.
-11. Wire right-trigger, controller ray and direct-touch events.
-12. Test spawn placement, delayed following and category behavior in headset.
-13. Record exact versions of Ultra Dynamic Sky and other local dependencies.
-14. Connect approved weather and time behavior to Ultra Dynamic Sky.
+9. Define the final weather and time option sets.
+10. Replace the generated greybox option visuals with the final icon design.
+11. Stabilize exact controller-ray hover exit behavior.
+12. Add direct object interaction for lights, doors and curtains when those
+    environment objects exist.
+13. Test spawn placement, delayed following and category behavior in headset.
+14. Record exact versions of Ultra Dynamic Sky and other local dependencies.
+15. Connect approved weather and time behavior to Ultra Dynamic Sky.
 
 ## Blockers
 
