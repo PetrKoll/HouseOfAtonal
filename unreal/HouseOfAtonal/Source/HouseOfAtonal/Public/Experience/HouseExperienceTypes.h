@@ -9,7 +9,9 @@ enum class EHouseLocation : uint8
 	Menu,
 	Exterior,
 	Interior,
-	Atrium
+	Atrium,
+	RoomOne,
+	RoomTwo
 };
 
 UENUM(BlueprintType)

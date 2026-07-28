@@ -163,3 +163,30 @@ Keep entries short. This is a chronological index; the current truth belongs in
   target successfully.
 - Next: open the map, review it in the headset and tune scale, framing, density
   and light before replacing any placeholders.
+
+## 2026-07-28 — [FORGE] Editable levels, traffic and destination flow
+
+- Replaced the active generated diorama workflow with
+  `L_MenuLevel_Editable`, composed of separately movable roads, parcels,
+  buildings, lights, hero house and viewpoint.
+- Added editable car and pedestrian spline routes, eight moving cube cars,
+  twelve zero-tick parked cube cars and ten moving cylinder pedestrians.
+- Added lightweight C++ route followers with per-instance speed, start,
+  direction, update interval and spacing controls.
+- Added `L_ViewLevel` with the full-scale house, ground and editable Atrium,
+  Room 1 and Room 2 arrival points.
+- Added a three-circle Menu Level destination selector and retained the locked
+  full radial menu for View Level.
+- Added right-controller input, visible pointer, hover/click interaction and
+  corrected widget trace-channel collision.
+- Corrected the native menu actor world scale after it initially spawned at
+  several-meter size.
+- Added initial View Level right-stick locomotion attempts. Known issue:
+  headset testing currently produces forward movement only; reverse and
+  lateral movement remain unresolved.
+- Confirmed the experience targets high-end PC rendering with Quest as the VR
+  display/headset, not standalone Quest compute.
+- Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8.
+- Next: stabilize right-stick locomotion, place final arrival points, refine
+  the road/sidewalk network, then establish the PC-quality atmosphere and
+  shadow rig before replacing traffic placeholders.

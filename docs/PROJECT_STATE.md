@@ -56,20 +56,25 @@ visual review in Unreal.
   reference as `res/blueprint.png`.
 - Added the confirmed `house_A.blend -> FBX -> Unreal Reimport` workflow and
   imported the current combined house as `SM_HeroHouse`.
-- Created `L_MenuLevel_V1` with a parameter-driven 7 x 7 tabletop city,
-  central hero-house slot, roads, sidewalks, mixed-height building blockouts,
-  tree/car placeholders, future traffic/pedestrian splines and golden-hour
-  lighting controls.
-- Added a stationary XR Menu Level pawn and game mode: no locomotion or
-  teleport, natural HMD parallax, and one-time seated/standing-relative
-  placement.
+- Replaced the generated Menu Level composition with
+  `L_MenuLevel_Editable`: roads, parcels, buildings, hero, lights and viewpoint
+  are ordinary individually movable level actors organized in Outliner folders.
+- Added a stationary XR Menu Level pawn with natural HMD parallax, no
+  locomotion in Menu Level and a manually movable `MENU_VIEWPOINT_MOVE_ME`.
+- Added individually editable traffic route, moving-car, parked-car and
+  pedestrian actors. V1 uses cubes for cars and cylinders for pedestrians.
+- Added `L_ViewLevel` with the full-scale reimportable house, ground and three
+  manually movable arrival points for Atrium, Room 1 and Room 2.
+- Added two Control Menu modes: a three-destination selector in Menu Level and
+  the locked full radial menu in View Level.
+- Added right-controller widget interaction with a visible pointer and fixed
+  `3DWidget` collision-channel handling.
 
 ## In progress
 
 - Developing the house geometry in `blender/house_A.blend`.
-- Reviewing and tuning `L_MenuLevel_V1` composition in Unreal and headset.
-- Preparing the initial fixed destinations and blockout for the Menu Level,
-  exterior, interior and atrium.
+- Art-directing `L_MenuLevel_Editable`, lighting and atmosphere.
+- Tuning arrival points and basic navigation in `L_ViewLevel`.
 
 ## Next actions
 
@@ -79,11 +84,11 @@ visual review in Unreal.
 3. Add interior partitions, stairs, openings and basement.
 4. Add the existing production roadmap to the repository.
 5. Write the one-page product definition and complete experience flow.
-6. Open `L_MenuLevel_V1` and review hero scale, oblique viewing angle, city
-   density and golden-hour composition in the headset.
-7. Tune the exposed Menu Level actor parameters; replace placeholders with
-   Megascans assets only after the silhouette is approved.
-8. Define the first three destinations and their arrival points.
+6. Refine the manually editable Menu Level city, roads, sidewalks and lighting.
+7. Correct View Level right-thumbstick locomotion. Current headset test reads
+   only forward movement reliably; lateral and reverse input are unresolved.
+8. Move and rotate `ARRIVAL_ATRIUM`, `ARRIVAL_ROOM_1` and `ARRIVAL_ROOM_2`
+   inside the finished house spaces.
 9. Define the final weather and time option sets.
 10. Replace the locked V1 number labels with final icons without changing its
     approved geometry, hover, pinning or motion.
@@ -96,11 +101,14 @@ visual review in Unreal.
 
 ## Blockers
 
-None recorded.
+- [FORGE] View Level right-thumbstick locomotion is incomplete: forward works,
+  but reverse and lateral movement do not currently respond reliably in the
+  headset.
 
 ## Risks to validate early
 
-- Standalone Quest 3 performance budget.
+- PC rendering performance budget for high-end VR; Quest is used as the
+  headset/display, not as the standalone compute target.
 - Lighting strategy and feasibility of time-of-day changes.
 - Vegetation, weather and seasonal variants within the performance budget.
 - Scope growth before an MVP is defined.

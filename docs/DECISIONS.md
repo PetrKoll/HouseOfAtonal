@@ -267,3 +267,43 @@ the previous one.
 - Consequence: Future house exports overwrite `house_A.fbx` and use Unreal
   Reimport on `SM_HeroHouse`; the city generator and level composition remain
   intact.
+
+## D-022 — Supersede the generated Menu Level with editable actors
+
+- Date: 2026-07-28
+- Author: [FORGE]
+- Status: accepted; supersedes the editing model in D-020
+- Decision: Use `L_MenuLevel_Editable` as the active Menu Level. Roads,
+  parcels, buildings, lighting, hero house and viewpoint are ordinary
+  individually movable level actors rather than runtime-generated HISM content.
+- Reason: Direct viewport art direction is more important than procedural
+  generation for this presentation scene.
+- Consequence: Nothing regenerates automatically at runtime. Optimization and
+  instancing happen only after the composition is approved.
+
+## D-023 — Separate Menu Level and View Level control modes
+
+- Date: 2026-07-28
+- Author: [FORGE]
+- Status: accepted
+- Decision: Menu Level uses a three-circle selector for Atrium, Room 1 and
+  Room 2. Selecting one loads `L_ViewLevel` and places the player at its
+  matching editable arrival point. View Level uses the locked full Control
+  Menu.
+- Reason: The initial diorama is a destination selector, while the full
+  environment needs destination, weather and time controls.
+- Consequence: The experience state persists the selected destination across
+  map loading. Each View destination is represented by a movable
+  `AHouseViewArrivalPoint`.
+
+## D-024 — Treat Quest as a PC-driven VR display target
+
+- Date: 2026-07-28
+- Author: [FORGE]
+- Status: accepted
+- Decision: Target a high-end PC-rendered VR experience streamed/displayed
+  through Quest rather than standalone Quest rendering.
+- Reason: Visual quality is the priority and compute remains on the workstation.
+- Consequence: Lighting, atmosphere, characters and effects are designed for
+  desktop VR performance; optimization remains important but is not constrained
+  to the standalone mobile renderer.

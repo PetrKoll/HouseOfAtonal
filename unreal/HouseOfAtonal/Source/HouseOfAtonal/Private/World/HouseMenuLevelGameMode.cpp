@@ -1,50 +1,41 @@
 #include "World/HouseMenuLevelGameMode.h"
 
-#include "Camera/PlayerCameraManager.h"
 #include "EngineUtils.h"
+#include "Experience/HouseExperienceSubsystem.h"
 #include "Kismet/GameplayStatics.h"
-#include "World/HouseMenuLevelBlockout.h"
 #include "World/HouseMenuLevelPawn.h"
+#include "World/HouseViewArrivalPoint.h"
 
 AHouseMenuLevelGameMode::AHouseMenuLevelGameMode()
 {
 	DefaultPawnClass = AHouseMenuLevelPawn::StaticClass();
-	DioramaClass = AHouseMenuLevelBlockout::StaticClass();
 }
 
 void AHouseMenuLevelGameMode::StartPlay()
 {
 	Super::StartPlay();
-
-	if (!bSpawnDioramaWhenMissing || !DioramaClass)
+	if (!GetWorld() ||
+		!GetWorld()->GetMapName().Contains(TEXT("L_ViewLevel")))
 	{
 		return;
 	}
 
-	for (TActorIterator<AHouseMenuLevelBlockout> It(GetWorld()); It; ++It)
+	UHouseExperienceSubsystem* Experience =
+		GetGameInstance()->GetSubsystem<UHouseExperienceSubsystem>();
+	APawn* Pawn = UGameplayStatics::GetPlayerPawn(this, 0);
+	if (!Experience || !Pawn)
 	{
 		return;
 	}
 
-	APlayerCameraManager* CameraManager =
-		UGameplayStatics::GetPlayerCameraManager(this, 0);
-	if (!CameraManager)
+	for (TActorIterator<AHouseViewArrivalPoint> It(GetWorld()); It; ++It)
 	{
-		return;
+		if (It->Destination == Experience->GetLocation())
+		{
+			Pawn->SetActorLocationAndRotation(
+				It->GetActorLocation(),
+				It->GetActorRotation());
+			return;
+		}
 	}
-
-	const FVector ViewLocation = CameraManager->GetCameraLocation();
-	const FRotator ViewRotation = CameraManager->GetCameraRotation();
-	const FRotator YawOnlyRotation(0.0f, ViewRotation.Yaw, 0.0f);
-	const FVector WorldOffset = YawOnlyRotation.RotateVector(
-		DioramaOffsetFromView);
-
-	FActorSpawnParameters SpawnParameters;
-	SpawnParameters.SpawnCollisionHandlingOverride =
-		ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	GetWorld()->SpawnActor<AHouseMenuLevelBlockout>(
-		DioramaClass,
-		ViewLocation + WorldOffset,
-		YawOnlyRotation + DioramaRotation,
-		SpawnParameters);
 }

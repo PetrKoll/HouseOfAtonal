@@ -42,6 +42,12 @@ public:
 	UFUNCTION(BlueprintPure, Category = "House of Atonal|Control Menu")
 	AHouseControlMenuActor* GetActiveControlMenu() const { return ActiveControlMenu; }
 
+	UFUNCTION(BlueprintCallable, Category = "House of Atonal|Control Menu")
+	void SetMenuWidgetClass(TSubclassOf<UUserWidget> InMenuWidgetClass)
+	{
+		MenuWidgetClass = InMenuWidgetClass;
+	}
+
 protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
@@ -60,7 +66,11 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "House of Atonal|Control Menu",
 		meta = (ClampMin = "0.1", ClampMax = "5.0"))
-	float MenuWorldScaleMultiplier = 2.0f;
+	float MenuWorldScaleMultiplier = 0.10f;
+
+	UPROPERTY(EditAnywhere, Category = "House of Atonal|Control Menu",
+		meta = (ClampMin = "0.05", ClampMax = "2.0"))
+	float MenuLevelSelectorScaleMultiplier = 0.10f;
 
 	UPROPERTY(Transient)
 	TObjectPtr<AHouseControlMenuActor> ActiveControlMenu;

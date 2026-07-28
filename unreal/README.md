@@ -75,3 +75,29 @@ recreate the complete V1 map and import from scratch, close Unreal and run:
 ```text
 "C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "D:\GIT\HouseOfAtonal\unreal\HouseOfAtonal\HouseOfAtonal.uproject" -ExecutePythonScript="D:\GIT\HouseOfAtonal\Tools\Unreal\setup_menu_level.py" -unattended -nop4
 ```
+
+## Active editable levels
+
+Author: [FORGE]
+
+The active startup map is now:
+
+`Content/HouseOfAtonal/Maps/L_MenuLevel_Editable`
+
+Its city, roads, parcels, buildings, lights and `MENU_VIEWPOINT_MOVE_ME` are
+normal individually editable actors. The older generated `L_MenuLevel_V1`
+remains only as an obsolete prototype.
+
+The full-scale environment is:
+
+`Content/HouseOfAtonal/Maps/L_ViewLevel`
+
+Its `ARRIVAL_ATRIUM`, `ARRIVAL_ROOM_1` and `ARRIVAL_ROOM_2` actors define
+player placement after selection in the Menu Level. The Menu Level opens a
+three-destination selector; View Level opens the full locked Control Menu.
+
+Traffic and pedestrian placeholders are organized under their own Outliner
+folders. Each moving car or pedestrian references an editable
+`AHouseRouteSpline`. Parked cars have no tick. Current known input issue:
+right-stick locomotion in View Level responds only to forward movement in the
+headset and must be stabilized next.

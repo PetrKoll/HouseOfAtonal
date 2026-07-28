@@ -6,12 +6,14 @@
 #include "Engine/World.h"
 #include "InputCoreTypes.h"
 #include "UI/HouseControlMenuActor.h"
+#include "UI/HouseMenuLevelSelector.h"
 #include "UI/HouseRadialMenuV1.h"
 
 UHouseControlMenuComponent::UHouseControlMenuComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	MenuActorClass = AHouseControlMenuActor::StaticClass();
+	MenuWidgetClass = UHouseRadialMenuV1::StaticClass();
 }
 
 void UHouseControlMenuComponent::ToggleControlMenu(
@@ -77,13 +79,21 @@ void UHouseControlMenuComponent::ShowControlMenu(
 		return;
 	}
 
-	ActiveControlMenu->SetMenuWidgetClass(
-		UHouseRadialMenuV1::StaticClass());
+	TSubclassOf<UUserWidget> WidgetClass = MenuWidgetClass;
+	if (!WidgetClass)
+	{
+		WidgetClass = UHouseRadialMenuV1::StaticClass();
+	}
+	ActiveControlMenu->SetMenuWidgetClass(WidgetClass);
 	UWidgetComponent* WidgetComponent =
 		ActiveControlMenu->GetMenuWidgetComponent();
+	const bool bIsMenuLevelSelector =
+		WidgetClass->IsChildOf(UHouseMenuLevelSelector::StaticClass());
 	WidgetComponent->SetRelativeScale3D(
 		WidgetComponent->GetRelativeScale3D() *
-		MenuWorldScaleMultiplier);
+		(bIsMenuLevelSelector
+			? MenuLevelSelectorScaleMultiplier
+			: MenuWorldScaleMultiplier));
 	WidgetComponent->InitWidget();
 
 	ActiveControlMenu->InitializeFollow(FollowTarget);

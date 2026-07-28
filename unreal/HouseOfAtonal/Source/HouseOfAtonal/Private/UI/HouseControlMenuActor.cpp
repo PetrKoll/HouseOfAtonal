@@ -17,7 +17,10 @@ AHouseControlMenuActor::AHouseControlMenuActor()
 	MenuWidgetComponent->SetDrawSize(FIntPoint(1024, 1024));
 	MenuWidgetComponent->SetPivot(FVector2D(0.5f, 0.5f));
 	MenuWidgetComponent->SetTwoSided(true);
-	MenuWidgetComponent->SetCollisionProfileName(TEXT("UI"));
+	MenuWidgetComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	MenuWidgetComponent->SetCollisionResponseToAllChannels(ECR_Ignore);
+	MenuWidgetComponent->SetCollisionResponseToChannel(
+		ECC_GameTraceChannel1, ECR_Block);
 }
 
 void AHouseControlMenuActor::BeginPlay()
