@@ -1,6 +1,6 @@
 # Project State
 
-Last updated: 2026-07-26
+Last updated: 2026-07-28
 Last updated by: [FORGE]
 
 ## Project
@@ -13,8 +13,9 @@ presentation and a complete portfolio case study, not a game demo.
 
 Phase 01 — Unreal foundation / early architectural blockout
 
-Status: the UE 5.8 VR template runs with the headset, the project now has a
-compiled C++ foundation, and architectural blockout work can begin.
+Status: the UE 5.8 VR template runs with the headset, Control Menu V1 is locked,
+and the first editable Menu Level diorama map and C++ blockout are ready for
+visual review in Unreal.
 
 ## Working principles
 
@@ -53,11 +54,20 @@ compiled C++ foundation, and architectural blockout work can begin.
   generator and a verified preview render.
 - Added the user's current manual model as `blender/house_A.blend` and its plan
   reference as `res/blueprint.png`.
+- Added the confirmed `house_A.blend -> FBX -> Unreal Reimport` workflow and
+  imported the current combined house as `SM_HeroHouse`.
+- Created `L_MenuLevel_V1` with a parameter-driven 7 x 7 tabletop city,
+  central hero-house slot, roads, sidewalks, mixed-height building blockouts,
+  tree/car placeholders, future traffic/pedestrian splines and golden-hour
+  lighting controls.
+- Added a stationary XR Menu Level pawn and game mode: no locomotion or
+  teleport, natural HMD parallax, and one-time seated/standing-relative
+  placement.
 
 ## In progress
 
 - Developing the house geometry in `blender/house_A.blend`.
-- Beginning the Unreal architectural and environment blockout.
+- Reviewing and tuning `L_MenuLevel_V1` composition in Unreal and headset.
 - Preparing the initial fixed destinations and blockout for the Menu Level,
   exterior, interior and atrium.
 
@@ -69,8 +79,10 @@ compiled C++ foundation, and architectural blockout work can begin.
 3. Add interior partitions, stairs, openings and basement.
 4. Add the existing production roadmap to the repository.
 5. Write the one-page product definition and complete experience flow.
-6. Restart the editor so it loads the newly compiled C++ module.
-7. Create the first project-owned blockout map under `Content/HouseOfAtonal`.
+6. Open `L_MenuLevel_V1` and review hero scale, oblique viewing angle, city
+   density and golden-hour composition in the headset.
+7. Tune the exposed Menu Level actor parameters; replace placeholders with
+   Megascans assets only after the silhouette is approved.
 8. Define the first three destinations and their arrival points.
 9. Define the final weather and time option sets.
 10. Replace the locked V1 number labels with final icons without changing its

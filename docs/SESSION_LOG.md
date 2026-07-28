@@ -148,3 +148,18 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8.
 - Next: preserve the locked motion and interaction while replacing numbers
   with icons and connecting menu selections to actual experience actions.
+
+## 2026-07-28 — [FORGE] Menu Level V1 foundation
+
+- Imported the confirmed `house_A.fbx` export as the separately reimportable
+  `SM_HeroHouse`.
+- Created `L_MenuLevel_V1` and a parameter-driven C++ tabletop city blockout
+  with 7 x 7 irregular blocks, streets, sidewalks and central hero placement.
+- Added tunable building heights, roof placeholders, trees, cars, future
+  vehicle/pedestrian splines and golden-hour/hero-beam lighting controls.
+- Added a stationary XR pawn and Menu Level game mode with HMD parallax, no
+  locomotion or teleport, and one-time view-relative placement.
+- Added a repeatable Unreal editor setup script and built the UE 5.8 editor
+  target successfully.
+- Next: open the map, review it in the headset and tune scale, framing, density
+  and light before replacing any placeholders.

@@ -236,3 +236,34 @@ the previous one.
   foundation for subsequent visual and functional work.
 - Consequence: Later icon and action integration must preserve this geometry,
   interaction state and animation behavior unless a new decision supersedes it.
+
+## D-020 — Build Menu Level as an editable tabletop diorama
+
+- Date: 2026-07-28
+- Author: [FORGE]
+- Status: accepted
+- Decision: Build Menu Level as a parameter-driven 7 x 7 tabletop city around
+  a separately reimportable three-floor hero house. Use an oblique fixed XR
+  viewpoint with head-motion parallax, no locomotion or teleport, a dark
+  ground/city falloff and diagonal golden-hour hero lighting.
+- Reason: The initial experience must present the house as the dominant new
+  intervention within a believable existing neighborhood while remaining easy
+  to art-direct and update.
+- Consequence: Surrounding buildings are normally lower than or equal to the
+  hero, with at most one or two taller accents. Roads, sidewalks, placeholder
+  vegetation/cars and route splines remain independently tunable for later
+  Megascans, traffic and pedestrian passes.
+
+## D-021 — Keep the hero house reimportable from Blender
+
+- Date: 2026-07-28
+- Author: [FORGE]
+- Status: accepted
+- Decision: Use `blender/house_A.blend -> blender/house_A.fbx ->
+  SM_HeroHouse` as the current exchange path, with the Unreal static mesh kept
+  separate from the generated Menu Level city.
+- Reason: The house is still being developed and must be replaceable without
+  rebuilding or baking the surrounding diorama.
+- Consequence: Future house exports overwrite `house_A.fbx` and use Unreal
+  Reimport on `SM_HeroHouse`; the city generator and level composition remain
+  intact.

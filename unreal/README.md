@@ -52,3 +52,26 @@ From a developer command prompt:
 
 Close and reopen an already-running editor after adding or changing the primary
 project module when Live Coding is not being used.
+
+## Menu Level V1
+
+Open:
+
+`Content/HouseOfAtonal/Maps/L_MenuLevel_V1`
+
+The level contains an editable `AHouseMenuLevelBlockout` actor. Its Details
+panel exposes the city layout, hero-house scale/rotation, context density and
+golden-hour lighting. `AHouseMenuLevelGameMode` uses a stationary XR pawn:
+head tracking supplies subtle parallax, but locomotion and teleport are not
+bound.
+
+The current hero-house asset is:
+
+`Content/HouseOfAtonal/Architecture/SM_HeroHouse`
+
+After overwriting `blender/house_A.fbx`, use Reimport on this static mesh. To
+recreate the complete V1 map and import from scratch, close Unreal and run:
+
+```text
+"C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "D:\GIT\HouseOfAtonal\unreal\HouseOfAtonal\HouseOfAtonal.uproject" -ExecutePythonScript="D:\GIT\HouseOfAtonal\Tools\Unreal\setup_menu_level.py" -unattended -nop4
+```

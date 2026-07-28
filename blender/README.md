@@ -1,5 +1,18 @@
 # Blender Model
 
+## Current Unreal exchange
+
+Author: [FORGE]
+
+The active manual source is `house_A.blend`. Its approved exchange path is:
+
+`house_A.blend -> house_A.fbx -> SM_HeroHouse`
+
+Export a new combined static-mesh FBX over `blender/house_A.fbx`, then use
+Reimport on `Content/HouseOfAtonal/Architecture/SM_HeroHouse` in Unreal. The
+Menu Level city is generated separately, so reimporting the house does not
+replace its roads, context buildings, routes or lighting setup.
+
 ## Current asset
 
 `HouseOfAtonal_blockout_v01.blend` is a parametric architectural blockout based
