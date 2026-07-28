@@ -206,3 +206,15 @@ Keep entries short. This is a chronological index; the current truth belongs in
   changes outside this focused commit.
 - Next: place the planter in `L_MenuLevel_Editable`, assign real tree meshes and
   verify the manual placement ergonomics before scaling up the vegetation pass.
+
+## 2026-07-28 — [FORGE] Surrounding-house placement handoff
+
+- Added the user's 30 imported surrounding-house Static Mesh assets to the
+  project-owned `Content/HouseOfAtonal/models/houses` namespace.
+- Saved the current `L_MenuLevel_Editable` composition with the first building
+  replacements and retained the user's editor preview settings.
+- Confirmed the instanced-tree planter remains Static-Mesh-only; the attempted
+  Megaplants Procedural/Skeletal integration was discarded cleanly because a
+  different vegetation package with complete Static Mesh trees will be used.
+- Next: continue composing the neighborhood with the imported houses, then add
+  the replacement static-tree package to `BP_InstancedTreePlanter`.

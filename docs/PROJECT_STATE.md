@@ -72,6 +72,9 @@ visual review in Unreal.
 - Added `BP_InstancedTreePlanter`, a manually art-directed vegetation actor.
   Each assigned tree mesh uses one HISM component while its instances retain
   individually editable position, rotation and scale handles in the viewport.
+- Imported 30 surrounding-house Static Mesh assets under
+  `Content/HouseOfAtonal/models/houses` and began replacing the Menu Level
+  context blockout with those buildings.
 
 ## In progress
 
