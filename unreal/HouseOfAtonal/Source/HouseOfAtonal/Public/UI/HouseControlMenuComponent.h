@@ -58,6 +58,10 @@ private:
 		meta = (ClampMin = "25.0", ClampMax = "500.0", Units = "cm"))
 	float SpawnDistance = 125.0f;
 
+	UPROPERTY(EditAnywhere, Category = "House of Atonal|Control Menu",
+		meta = (ClampMin = "0.1", ClampMax = "5.0"))
+	float MenuWorldScaleMultiplier = 2.0f;
+
 	UPROPERTY(Transient)
 	TObjectPtr<AHouseControlMenuActor> ActiveControlMenu;
 };

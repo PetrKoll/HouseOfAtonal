@@ -46,11 +46,16 @@ void AHouseControlMenuActor::Tick(float DeltaSeconds)
 		? PositionFollowSpeed * CatchUpSpeedMultiplier
 		: PositionFollowSpeed;
 
-	const FVector NewLocation = FMath::VInterpTo(
+	FVector NewLocation = FMath::VInterpTo(
 		GetActorLocation(),
 		DesiredLocation,
 		DeltaSeconds,
 		EffectivePositionSpeed);
+	NewLocation.Z = FMath::FInterpTo(
+		GetActorLocation().Z,
+		DesiredLocation.Z,
+		DeltaSeconds,
+		VerticalFollowSpeed);
 
 	const FVector ToUser = FollowTarget->GetComponentLocation() - NewLocation;
 	const FRotator LookAtRotation = ToUser.Rotation();

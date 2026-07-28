@@ -73,8 +73,9 @@ compiled C++ foundation, and architectural blockout work can begin.
 7. Create the first project-owned blockout map under `Content/HouseOfAtonal`.
 8. Define the first three destinations and their arrival points.
 9. Define the final weather and time option sets.
-10. Replace the generated greybox option visuals with the final icon design.
-11. Stabilize exact controller-ray hover exit behavior.
+10. Replace the locked V1 number labels with final icons without changing its
+    approved geometry, hover, pinning or motion.
+11. Connect the locked menu selections to destination, weather and time state.
 12. Add direct object interaction for lights, doors and curtains when those
     environment objects exist.
 13. Test spawn placement, delayed following and category behavior in headset.

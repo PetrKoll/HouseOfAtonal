@@ -132,3 +132,19 @@ Keep entries short. This is a chronological index; the current truth belongs in
   and requires a deterministic hit-test revision.
 - Next: test the generated option strip, stabilize hover, then replace greybox
   labels with approved icons and final presets.
+
+## 2026-07-28 — [FORGE] Control Menu V1 locked
+
+- Discarded the previous WBP-based visual attempt and built a self-contained
+  C++ radial menu.
+- Added a texture-free filled-circle widget rendered as colored Slate geometry.
+- Locked three main circles (`01–03`) and three dedicated contextual groups
+  (`11–13`, `21–23`, `31–33`).
+- Added reliable main and contextual hover scaling plus click-to-pin behavior.
+- Positioned each contextual group on its approved outer arc.
+- Added simultaneous retract/expand transitions with group delay, stronger
+  easing and a subtle damped spring, avoiding visibility flashes.
+- Increased the world-space menu scale and added delayed vertical following.
+- Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8.
+- Next: preserve the locked motion and interaction while replacing numbers
+  with icons and connecting menu selections to actual experience actions.

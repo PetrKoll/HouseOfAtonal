@@ -2,7 +2,30 @@
 
 Author: [FORGE]
 Status: first approved behavior draft
-Last updated: 2026-07-26
+Last updated: 2026-07-28
+
+## Locked Control Menu V1
+
+The first interaction and motion prototype is approved and locked:
+
+- three main filled circles arranged as a triangle
+- main labels `01`, `02` and `03`
+- controller hover enlarges exactly the targeted circle
+- clicking a main circle pins it open
+- each main circle owns a separate group of three contextual circles
+- contextual labels are `11–13`, `21–23` and `31–33`
+- contextual circles use 75 percent of the main-circle diameter
+- each contextual circle enlarges independently on hover
+- the top group expands upward; lower groups expand to their outer sides
+- contextual groups travel from and return behind their parent circle
+- changing category retracts the old group while the new group begins after a
+  short delay; visibility is never switched between shared circles
+- option motion uses pronounced easing and a subtle damped spring
+- the menu follows head movement horizontally and vertically with tunable lag
+- the world-space menu is currently scaled by a factor of two
+
+Do not alter this behavior while replacing number labels with final icons or
+connecting selections to experience state.
 
 ## Implementation status
 

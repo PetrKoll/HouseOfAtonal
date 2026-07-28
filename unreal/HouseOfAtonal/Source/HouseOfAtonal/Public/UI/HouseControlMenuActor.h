@@ -54,6 +54,10 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "House of Atonal|Control Menu|Follow",
 		meta = (ClampMin = "0.1"))
+	float VerticalFollowSpeed = 5.0f;
+
+	UPROPERTY(EditAnywhere, Category = "House of Atonal|Control Menu|Follow",
+		meta = (ClampMin = "0.1"))
 	float RotationFollowSpeed = 7.0f;
 
 	UPROPERTY(EditAnywhere, Category = "House of Atonal|Control Menu|Follow",

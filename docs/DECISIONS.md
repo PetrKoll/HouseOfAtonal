@@ -223,3 +223,16 @@ the previous one.
   category in the Control Menu.
 - Reason: These actions belong spatially to the objects they affect.
 - Consequence: The Control Menu contains Destination, Weather and Time of Day.
+
+## D-019 — Lock the Control Menu V1 interaction and motion
+
+- Date: 2026-07-28
+- Author: [FORGE]
+- Status: accepted
+- Decision: Lock the approved three-circle radial layout, dedicated contextual
+  groups, exact hover scaling, click-to-pin state, outward group placement,
+  delayed cross-group transition, pronounced easing and subtle spring motion.
+- Reason: The behavior has been validated in the headset and is the stable
+  foundation for subsequent visual and functional work.
+- Consequence: Later icon and action integration must preserve this geometry,
+  interaction state and animation behavior unless a new decision supersedes it.

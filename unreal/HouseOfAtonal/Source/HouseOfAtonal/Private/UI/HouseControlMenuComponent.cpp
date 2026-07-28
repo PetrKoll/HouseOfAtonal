@@ -6,7 +6,7 @@
 #include "Engine/World.h"
 #include "InputCoreTypes.h"
 #include "UI/HouseControlMenuActor.h"
-#include "UI/HouseControlMenuWidget.h"
+#include "UI/HouseRadialMenuV1.h"
 
 UHouseControlMenuComponent::UHouseControlMenuComponent()
 {
@@ -77,24 +77,14 @@ void UHouseControlMenuComponent::ShowControlMenu(
 		return;
 	}
 
-	if (MenuWidgetClass)
-	{
-		ActiveControlMenu->SetMenuWidgetClass(MenuWidgetClass);
-		UWidgetComponent* WidgetComponent =
-			ActiveControlMenu->GetMenuWidgetComponent();
-		WidgetComponent->InitWidget();
-
-		if (UHouseControlMenuWidget* MenuWidget =
-			Cast<UHouseControlMenuWidget>(WidgetComponent->GetUserWidgetObject()))
-		{
-			MenuWidget->SetPointerInteraction(
-				FindRightWidgetInteraction(),
-				WidgetComponent);
-			MenuWidget->OnDismissRequested.AddDynamic(
-				this,
-				&UHouseControlMenuComponent::HideControlMenu);
-		}
-	}
+	ActiveControlMenu->SetMenuWidgetClass(
+		UHouseRadialMenuV1::StaticClass());
+	UWidgetComponent* WidgetComponent =
+		ActiveControlMenu->GetMenuWidgetComponent();
+	WidgetComponent->SetRelativeScale3D(
+		WidgetComponent->GetRelativeScale3D() *
+		MenuWorldScaleMultiplier);
+	WidgetComponent->InitWidget();
 
 	ActiveControlMenu->InitializeFollow(FollowTarget);
 }
