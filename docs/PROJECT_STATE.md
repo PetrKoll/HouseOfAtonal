@@ -69,12 +69,17 @@ visual review in Unreal.
   the locked full radial menu in View Level.
 - Added right-controller widget interaction with a visible pointer and fixed
   `3DWidget` collision-channel handling.
+- Added `BP_InstancedTreePlanter`, a manually art-directed vegetation actor.
+  Each assigned tree mesh uses one HISM component while its instances retain
+  individually editable position, rotation and scale handles in the viewport.
 
 ## In progress
 
 - Developing the house geometry in `blender/house_A.blend`.
 - Art-directing `L_MenuLevel_Editable`, lighting and atmosphere.
 - Tuning arrival points and basic navigation in `L_ViewLevel`.
+- Replacing blockout context with the user's imported surrounding buildings
+  and manually placing instanced vegetation.
 
 ## Next actions
 
@@ -85,19 +90,21 @@ visual review in Unreal.
 4. Add the existing production roadmap to the repository.
 5. Write the one-page product definition and complete experience flow.
 6. Refine the manually editable Menu Level city, roads, sidewalks and lighting.
-7. Correct View Level right-thumbstick locomotion. Current headset test reads
+7. Place `BP_InstancedTreePlanter`, assign the production tree meshes and
+   validate its viewport transform workflow on the current Menu Level.
+8. Correct View Level right-thumbstick locomotion. Current headset test reads
    only forward movement reliably; lateral and reverse input are unresolved.
-8. Move and rotate `ARRIVAL_ATRIUM`, `ARRIVAL_ROOM_1` and `ARRIVAL_ROOM_2`
+9. Move and rotate `ARRIVAL_ATRIUM`, `ARRIVAL_ROOM_1` and `ARRIVAL_ROOM_2`
    inside the finished house spaces.
-9. Define the final weather and time option sets.
-10. Replace the locked V1 number labels with final icons without changing its
+10. Define the final weather and time option sets.
+11. Replace the locked V1 number labels with final icons without changing its
     approved geometry, hover, pinning or motion.
-11. Connect the locked menu selections to destination, weather and time state.
-12. Add direct object interaction for lights, doors and curtains when those
+12. Connect the locked menu selections to destination, weather and time state.
+13. Add direct object interaction for lights, doors and curtains when those
     environment objects exist.
-13. Test spawn placement, delayed following and category behavior in headset.
-14. Record exact versions of Ultra Dynamic Sky and other local dependencies.
-15. Connect approved weather and time behavior to Ultra Dynamic Sky.
+14. Test spawn placement, delayed following and category behavior in headset.
+15. Record exact versions of Ultra Dynamic Sky and other local dependencies.
+16. Connect approved weather and time behavior to Ultra Dynamic Sky.
 
 ## Blockers
 

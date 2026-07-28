@@ -190,3 +190,19 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Next: stabilize right-stick locomotion, place final arrival points, refine
   the road/sidewalk network, then establish the PC-quality atmosphere and
   shadow rig before replacing traffic placeholders.
+
+## 2026-07-28 — [FORGE] Manual instanced-tree planter
+
+- Added the Blueprintable `AHouseInstancedMeshPlanter` C++ actor and generated
+  the ready-to-place `BP_InstancedTreePlanter` asset.
+- Each mesh entry owns manually added local transforms exposed as viewport
+  widgets for position, rotation and scale editing.
+- The actor rebuilds one HISM component per valid mesh and has no runtime tick;
+  shadows, distance-field lighting, indirect lighting, collision and minimum
+  LOD remain tunable per mesh group.
+- Built the UE 5.8 editor target successfully and created the Blueprint asset
+  through a repeatable editor Python helper.
+- Preserved the user's uncommitted Menu Level, editor-setting and imported-model
+  changes outside this focused commit.
+- Next: place the planter in `L_MenuLevel_Editable`, assign real tree meshes and
+  verify the manual placement ergonomics before scaling up the vegetation pass.

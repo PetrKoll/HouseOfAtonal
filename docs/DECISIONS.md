@@ -307,3 +307,18 @@ the previous one.
 - Consequence: Lighting, atmosphere, characters and effects are designed for
   desktop VR performance; optimization remains important but is not constrained
   to the standalone mobile renderer.
+
+## D-025 — Use manually placed HISM groups for repeated vegetation
+
+- Date: 2026-07-28
+- Author: [FORGE]
+- Status: accepted
+- Decision: Use one editable planting actor containing mesh groups and manual
+  instance transforms. Render each mesh group through one Hierarchical
+  Instanced Static Mesh component.
+- Reason: Vegetation placement must remain directly art-directable in the
+  viewport while repeated trees should not incur one actor and draw setup per
+  copy.
+- Consequence: The designer adds transforms under the chosen mesh, then moves,
+  rotates and scales their viewport widgets. Procedural scattering is not part
+  of this tool.
