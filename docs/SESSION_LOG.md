@@ -242,3 +242,14 @@ Keep entries short. This is a chronological index; the current truth belongs in
   unregister warning after the FBX export had completed successfully.
 - Next: visually check the refreshed mesh, scale, materials and pivots in both
   Menu Level and View Level before continuing architectural edits.
+
+## 2026-07-31 — [FORGE] Clean hero house reimport
+
+- Re-exported the cleaned 3.4 MB `house_A.blend` and successfully reimported it
+  over the existing `SM_HeroHouse` path.
+- Reduced `house_A.fbx` from approximately 288 MB to 4.5 MB and the Unreal mesh
+  package from approximately 260 MB to 2.7 MB, removing the oversized geometry
+  that consumed about 183 MiB of always-resident ray-tracing memory.
+- Added the user's `trees.blend` vegetation source to the shared Blender assets.
+- Next: reopen Unreal and confirm the house scale, pivot, materials and the
+  disappearance of the ray-tracing geometry memory warning.

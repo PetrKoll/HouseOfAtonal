@@ -78,6 +78,9 @@ visual review in Unreal.
 - Re-exported the current saved `house_A.blend` and reimported it over the
   existing `SM_HeroHouse` asset while preserving all level references. Added
   repeatable Blender export and Unreal reimport scripts for future revisions.
+- Re-exported the cleaned house source after removing the accidentally included
+  heavy geometry. The exchange FBX dropped from 288 MB to 4.5 MB and the
+  rebuilt `SM_HeroHouse` package dropped from 260 MB to 2.7 MB.
 
 ## In progress
 
@@ -137,7 +140,8 @@ visual review in Unreal.
 
 `blender/house_A.blend` remains the active user-authored house model.
 `blender/house__X.blend` is the current alternate house working copy and
-`blender/cars.blend` contains the new vehicle source work. The older
+`blender/cars.blend` contains the new vehicle source work. `blender/trees.blend`
+contains the current vegetation source collection. The older
 `HouseOfAtonal_blockout_v01.blend` is retained only as an experiment and must
 not be treated as the architectural source of truth.
 
