@@ -75,6 +75,9 @@ visual review in Unreal.
 - Imported 30 surrounding-house Static Mesh assets under
   `Content/HouseOfAtonal/models/houses` and began replacing the Menu Level
   context blockout with those buildings.
+- Re-exported the current saved `house_A.blend` and reimported it over the
+  existing `SM_HeroHouse` asset while preserving all level references. Added
+  repeatable Blender export and Unreal reimport scripts for future revisions.
 
 ## In progress
 

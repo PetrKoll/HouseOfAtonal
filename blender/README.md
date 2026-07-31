@@ -13,6 +13,13 @@ Reimport on `Content/HouseOfAtonal/Architecture/SM_HeroHouse` in Unreal. The
 Menu Level city is generated separately, so reimporting the house does not
 replace its roads, context buildings, routes or lighting setup.
 
+On the workstation this exchange is automated by:
+
+```text
+"C:\Program Files\Blender Foundation\Blender 5.0\blender.exe" --background "D:\GIT\HouseOfAtonal\blender\house_A.blend" --python "D:\GIT\HouseOfAtonal\blender\scripts\export_house_a_fbx.py"
+"C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" "D:\GIT\HouseOfAtonal\unreal\HouseOfAtonal\HouseOfAtonal.uproject" -unattended -nop4 -ExecutePythonScript="D:\GIT\HouseOfAtonal\unreal\HouseOfAtonal\Tools\Unreal\reimport_hero_house.py"
+```
+
 ## Current asset
 
 `HouseOfAtonal_blockout_v01.blend` is a parametric architectural blockout based

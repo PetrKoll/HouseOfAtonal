@@ -229,3 +229,16 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Next: install the same RayMarchCloud dependency on any workstation that must
   open the map with those local references, then continue the atmosphere and
   static vegetation passes.
+
+## 2026-07-31 — [FORGE] Hero house FBX refresh
+
+- Exported all renderable mesh objects in the active View Layer of the saved
+  `house_A.blend` to a new combined Unreal exchange FBX.
+- Reimported the 288 MB FBX over the existing
+  `/Game/HouseOfAtonal/Architecture/SM_HeroHouse`; its package was rebuilt and
+  saved without changing its asset path or level references.
+- Added repeatable Blender 5.0 export and UE 5.8 automated import scripts.
+- Blender's background shutdown emitted an unrelated local Megascans-addon
+  unregister warning after the FBX export had completed successfully.
+- Next: visually check the refreshed mesh, scale, materials and pivots in both
+  Menu Level and View Level before continuing architectural edits.
