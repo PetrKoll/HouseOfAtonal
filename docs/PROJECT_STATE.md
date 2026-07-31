@@ -1,6 +1,6 @@
 # Project State
 
-Last updated: 2026-07-28
+Last updated: 2026-07-31
 Last updated by: [FORGE]
 
 ## Project
@@ -124,12 +124,17 @@ visual review in Unreal.
 - Scope growth before an MVP is defined.
 - Git LFS storage pressure if Marketplace libraries are committed.
 - Ultra Dynamic Sky performance and feature parity on standalone Quest 3.
+- `Content/RayMarchCloud` is a local 352 MB vendor package and is intentionally
+  excluded from Git. Any map references require the package to be installed on
+  the other Unreal workstation as well.
 - Current architectural dimensions are inferred from a 1536 × 1024 concept
   board and are not suitable for construction-level accuracy.
 
 ## Current Blender source
 
-`blender/house_A.blend` is the active user-authored house model. The older
+`blender/house_A.blend` remains the active user-authored house model.
+`blender/house__X.blend` is the current alternate house working copy and
+`blender/cars.blend` contains the new vehicle source work. The older
 `HouseOfAtonal_blockout_v01.blend` is retained only as an experiment and must
 not be treated as the architectural source of truth.
 

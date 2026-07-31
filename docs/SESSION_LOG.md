@@ -218,3 +218,14 @@ Keep entries short. This is a chronological index; the current truth belongs in
   different vegetation package with complete Static Mesh trees will be used.
 - Next: continue composing the neighborhood with the imported houses, then add
   the replacement static-tree package to `BP_InstancedTreePlanter`.
+
+## 2026-07-31 — [FORGE] House, vehicle and Menu Level sync
+
+- Updated the active `house_A.blend`, added the alternate `house__X.blend` and
+  added `cars.blend`; all Blender binaries remain managed through Git LFS.
+- Saved the current `L_MenuLevel_Editable` art-direction pass.
+- Kept the 352 MB `Content/RayMarchCloud` vendor package local in accordance
+  with D-009 rather than consuming shared LFS storage.
+- Next: install the same RayMarchCloud dependency on any workstation that must
+  open the map with those local references, then continue the atmosphere and
+  static vegetation passes.
