@@ -253,3 +253,110 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Added the user's `trees.blend` vegetation source to the shared Blender assets.
 - Next: reopen Unreal and confirm the house scale, pivot, materials and the
   disappearance of the ray-tracing geometry memory warning.
+
+## 2026-08-01 — [FORGE] Menu Level volumetrics and shadow-quality pass
+
+- Diagnosed the local FogArea failure: the vendor demo includes an enabled
+  Exponential Height Fog, while `L_MenuLevel_Editable` only contained the
+  FogArea actors and lights.
+- Added `ATMOSPHERE_VolumetricFog` with an enabled volumetric system and
+  effectively invisible global density, leaving local FogArea volumes in
+  artistic control.
+- Increased volumetric grid quality for PC-rendered VR and improved the
+  shadow-casting lights through lower bias, contact shadows, higher local
+  resolution and volumetric shadow casting without changing light transforms,
+  colors or intensities.
+- Added repeatable configuration and inspection scripts and verified the saved
+  level values through UE 5.8.
+- Next: inspect the result in the viewport/headset and tune each FogArea actor
+  and the authored light composition visually.
+
+## 2026-08-01 — [FORGE] Stereo FogArea compatibility test
+
+- Disabled Mobile Multi-View and Instanced Stereo for the PC-rendered VR path
+  after FogArea rendered in only one headset eye.
+- Kept Forward Shading and the established atmosphere/shadow-quality settings.
+- Next: allow the initial shader compilation to finish, test FogArea in both
+  eyes, and retain standard stereo if this confirms vendor-material
+  incompatibility with the instanced stereo path.
+
+## 2026-08-01 — [FORGE] Editable Menu Level camera DOF
+
+- Added and placed the standalone `Camera_DOF_Settings` actor in the Menu
+  Level; the runtime-spawned XR pawn is intentionally not required for editing.
+- Exposed enable, focus distance, aperture, focal region, near/far transition
+  and blend weight parameters directly in the actor's Details panel.
+- Its unbound Post Process component updates during level editing and applies
+  to the XR view at runtime without Blueprint wiring.
+- Built `HouseOfAtonalEditor Win64 Development` successfully with UE 5.8 and
+  verified that the actor was saved into `L_MenuLevel_Editable`.
+- Next: tune DOF gently in-headset and verify comfortable stereo focus at the
+  intended diorama viewing distance.
+
+## 2026-08-01 — [FORGE] Deferred Lumen rendering path
+
+- Diagnosed the flat lighting and missing reflections as a renderer mismatch:
+  Lumen GI and Lumen Reflections were configured while Forward Shading was
+  active, where neither feature is supported.
+- Switched the PCVR project to Desktop Deferred Rendering and TSR while
+  retaining DX12 SM6, Lumen GI, Lumen Reflections, Virtual Shadow Maps and the
+  standard stereo path required by FogArea.
+- Next: allow the full shader rebuild to finish, evaluate GI/reflections in the
+  viewport and both headset eyes, then tune exposure and material response.
+
+## 2026-08-01 — [FORGE] Traffic car mesh variants
+
+- Imported `blender/cars.fbx` as three separate project-owned Static Meshes:
+  `car_A`, `car_b` and `car_C`.
+- Replaced all eight current moving traffic cubes with cyclic car variants
+  while preserving their route, speed, spacing and intersection behavior.
+- Added per-actor `Vehicle Variant` control (0–2), diorama scale/orientation
+  correction and enabled dynamic shadow casting for moving and future parked
+  vehicles.
+- Built `HouseOfAtonalEditor Win64 Development` successfully and verified every
+  current moving actor's mesh assignment and shadow state in the saved map.
+- Next: visually validate orientation, road height and scale, then assign the
+  intended car materials and add parked-car actors where required.
+
+## 2026-08-02 — [FORGE] Traffic orientation and manual-offset fix
+
+- Corrected the eight existing car components that retained the old cube scale
+  and rotation after their meshes were replaced.
+- Added editable `Vehicle Mesh Rotation` and `Vehicle Mesh Scale` controls for
+  per-car visual correction.
+- Moving vehicles now preserve the manually placed actor rotation as an offset
+  from the spline heading instead of discarding it at runtime.
+- Built the UE 5.8 editor target successfully and reapplied all mesh variants,
+  corrected transforms and shadow settings to the saved Menu Level.
+- Next: validate forward direction on the actual routes; if a source mesh faces
+  backward rather than sideways, adjust its exposed rotation by 180 degrees.
+
+## 2026-08-02 — [FORGE] Runtime-instanced traffic manager
+
+- Replaced per-car runtime ticking with one `Traffic_Manager` and three HISM
+  components, one for each imported car variant.
+- Kept each car as an editor-only authoring object so its world scale, world
+  rotation, speed, route, start distance and variant remain individually
+  editable.
+- At runtime the manager copies those authored values, creates HISM instances,
+  removes the preview actors and advances every vehicle from one shared tick.
+- The runtime heading is spline tangent plus the authoring actor's saved manual
+  rotation offset plus the FBX mesh-axis correction. Scale is copied from the
+  actor and is never authored or overwritten by the manager.
+- Built successfully and saved `Traffic_Manager` into the Menu Level.
+- Next: verify route direction, scale preservation and speed in VR/PIE before
+  changing any additional traffic behavior.
+
+## 2026-08-02 — [FORGE] Manager-owned traffic configuration
+
+- Superseded the editor-car authoring approach above: individual `MovingCar`
+  actors are no longer the traffic source of truth.
+- `Traffic_Manager` now owns an eight-element `Vehicles` array. Every entry
+  independently exposes route, start distance, mesh variant, scale, rotation
+  offset, speed, reverse direction and spacing.
+- At runtime the manager creates only HISM instances and advances them from one
+  shared update; no individual car actors or per-car ticks are required.
+- Built the UE 5.8 editor target successfully and saved all eight vehicle
+  records into `L_MenuLevel_Editable`.
+- Next: visually validate the eight manager entries in PIE before changing any
+  additional traffic behavior.

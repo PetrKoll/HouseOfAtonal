@@ -92,6 +92,8 @@ visual review in Unreal.
 
 ## Next actions
 
+0. Visually validate and art-direct the new local FogArea volumetrics and
+   quality-focused shadow settings in the editable Menu Level.
 1. Continue the manual model in `blender/house_A.blend`.
 2. Resolve architectural dimensions and stair geometry from human-scale design
    requirements and the available plan.

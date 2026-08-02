@@ -322,3 +322,43 @@ the previous one.
 - Consequence: The designer adds transforms under the chosen mesh, then moves,
   rotates and scales their viewport widgets. Procedural scattering is not part
   of this tool.
+
+## D-026 — Prioritize PC-quality local atmosphere in the Menu Level
+
+- Date: 2026-08-01
+- Author: [FORGE]
+- Status: accepted
+- Decision: Drive local FogArea volumes with one nearly invisible global
+  Exponential Height Fog and allocate increased desktop GPU quality to
+  volumetric resolution and Virtual Shadow Maps.
+- Reason: Quest is only the display target, the Menu Level has little runtime
+  activity, and visual atmosphere is the current priority.
+- Consequence: FogArea remains locally art-directable in the level, while the
+  project carries a higher volumetric and shadow cost than default settings.
+
+## D-027 — Use Desktop Deferred with Lumen for PCVR presentation
+
+- Date: 2026-08-01
+- Author: [FORGE]
+- Status: accepted
+- Decision: Use Desktop Deferred Rendering, TSR, Lumen GI, Lumen Reflections,
+  DX12 SM6 and Virtual Shadow Maps for the PC-rendered experience.
+- Reason: Forward Shading cannot provide Lumen bounce or reflections, and the
+  project's priority is high-end visual depth rather than standalone Quest
+  rendering performance.
+- Consequence: Rendering both headset eyes is substantially more expensive and
+  must be profiled, but indirect illumination and reflection features are now
+  available on their supported rendering path.
+
+## D-028 — Author cars individually, render and move them centrally
+
+- Date: 2026-08-02
+- Author: [FORGE]
+- Status: accepted
+- Decision: Keep individual car actors only as designer-editable authoring
+  records. Convert them at BeginPlay into three HISM groups managed by one
+  shared traffic manager.
+- Reason: The designer needs per-car transform, speed, route and variant
+  control without paying for individual runtime actors and ticks.
+- Consequence: Editor transforms are the source of truth; runtime instances
+  preserve authored scale and rotation offsets while following spline paths.

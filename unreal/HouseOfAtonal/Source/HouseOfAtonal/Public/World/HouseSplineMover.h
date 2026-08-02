@@ -36,12 +36,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mover")
 	bool bMovementEnabled = true;
 
+	/** Preserve a manual actor rotation as an offset from the spline heading. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mover|Orientation")
+	bool bPreservePlacedRotationOffset = true;
+
+	/** Additional heading correction applied after the spline rotation. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mover|Orientation")
+	FRotator RouteRotationOffset = FRotator::ZeroRotator;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Performance",
 		meta = (ClampMin = "0.016", ClampMax = "0.2", Units = "s"))
 	float UpdateInterval = 0.033f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Performance")
-	bool bCastPlaceholderShadow = false;
+	bool bCastPlaceholderShadow = true;
 
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Mover")
 	void SnapToRoute();
@@ -53,6 +61,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual float GetMovementMultiplier() const;
 	void ApplyRouteTransform();
+	FRotator GetRouteRotation(float Distance) const;
 
 	float DistanceAlongRoute = 0.0f;
 };

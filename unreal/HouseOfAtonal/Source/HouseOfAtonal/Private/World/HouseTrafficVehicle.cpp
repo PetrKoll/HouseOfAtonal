@@ -6,14 +6,44 @@
 
 AHouseTrafficVehicle::AHouseTrafficVehicle()
 {
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> Cube(
-		TEXT("/Engine/BasicShapes/Cube.Cube"));
-	if (Cube.Succeeded())
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CarA(
+		TEXT("/Game/HouseOfAtonal/models/cars/car_A.car_A"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CarB(
+		TEXT("/Game/HouseOfAtonal/models/cars/car_b.car_b"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CarC(
+		TEXT("/Game/HouseOfAtonal/models/cars/car_C.car_C"));
+	if (CarA.Succeeded())
 	{
-		Visual->SetStaticMesh(Cube.Object);
+		VehicleMeshes.Add(CarA.Object);
 	}
-	Visual->SetRelativeScale3D(FVector(0.044f, 0.019f, 0.014f));
+	if (CarB.Succeeded())
+	{
+		VehicleMeshes.Add(CarB.Object);
+	}
+	if (CarC.Succeeded())
+	{
+		VehicleMeshes.Add(CarC.Object);
+	}
+	Visual->SetCastShadow(true);
+	bCastPlaceholderShadow = true;
+	ApplyVehicleVariant();
 	Speed = 10.0f;
+}
+
+void AHouseTrafficVehicle::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+	ApplyVehicleVariant();
+}
+
+void AHouseTrafficVehicle::ApplyVehicleVariant()
+{
+	if (Visual && VehicleMeshes.IsValidIndex(VehicleVariant))
+	{
+		Visual->SetStaticMesh(VehicleMeshes[VehicleVariant]);
+		Visual->SetRelativeRotation(VehicleMeshRotation);
+		Visual->SetCastShadow(true);
+	}
 }
 
 float AHouseTrafficVehicle::GetMovementMultiplier() const

@@ -12,7 +12,7 @@ AHouseSplineMover::AHouseSplineMover()
 	Visual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Placeholder"));
 	SetRootComponent(Visual);
 	Visual->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	Visual->SetCastShadow(false);
+	Visual->SetCastShadow(true);
 }
 
 void AHouseSplineMover::BeginPlay()
@@ -21,6 +21,12 @@ void AHouseSplineMover::BeginPlay()
 	PrimaryActorTick.TickInterval = UpdateInterval;
 	Visual->SetCastShadow(bCastPlaceholderShadow);
 	DistanceAlongRoute = StartDistance;
+	if (bPreservePlacedRotationOffset && Route && Route->Spline)
+	{
+		RouteRotationOffset =
+			(GetActorRotation() - GetRouteRotation(DistanceAlongRoute))
+			.GetNormalized();
+	}
 	ApplyRouteTransform();
 }
 
@@ -66,11 +72,23 @@ void AHouseSplineMover::ApplyRouteTransform()
 	}
 	const FVector Location = Route->Spline->GetLocationAtDistanceAlongSpline(
 		DistanceAlongRoute, ESplineCoordinateSpace::World);
+	FRotator Rotation = GetRouteRotation(DistanceAlongRoute);
+	Rotation += RouteRotationOffset;
+	SetActorLocationAndRotation(Location, Rotation.GetNormalized());
+}
+
+FRotator AHouseSplineMover::GetRouteRotation(const float Distance) const
+{
+	if (!Route || !Route->Spline)
+	{
+		return FRotator::ZeroRotator;
+	}
+
 	FRotator Rotation = Route->Spline->GetRotationAtDistanceAlongSpline(
-		DistanceAlongRoute, ESplineCoordinateSpace::World);
+		Distance, ESplineCoordinateSpace::World);
 	if (bReverseDirection)
 	{
 		Rotation.Yaw += 180.0f;
 	}
-	SetActorLocationAndRotation(Location, Rotation);
+	return Rotation.GetNormalized();
 }
