@@ -1,5 +1,6 @@
 #include "World/HouseMapViewController.h"
 
+#include "Components/LightComponent.h"
 #include "EngineUtils.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
@@ -8,6 +9,22 @@ AHouseMapViewController::AHouseMapViewController()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = false;
+}
+
+void AHouseMapViewController::BeginPlay()
+{
+	Super::BeginPlay();
+	CacheAuthoredLightIntensities();
+	for (const TPair<TWeakObjectPtr<ULightComponent>, float>& Pair : AuthoredLightIntensities)
+	{
+		if (ULightComponent* Light = Pair.Key.Get())
+		{
+			const AActor* LightOwner = Light->GetOwner();
+			Light->SetIntensity(
+				LightOwner && LightOwner->ActorHasTag(MapLightTag) ? 0.0f : Pair.Value);
+		}
+	}
+	ApplyMode(EHouseMapViewMode::Neighborhood, false);
 }
 
 void AHouseMapViewController::Tick(const float DeltaSeconds)
@@ -30,6 +47,7 @@ void AHouseMapViewController::Tick(const float DeltaSeconds)
 	TransitionElapsed += DeltaSeconds;
 	const float Alpha = FMath::Clamp(TransitionElapsed / TransitionDuration, 0.0f, 1.0f);
 	const float SmoothAlpha = FMath::SmoothStep(0.0f, 1.0f, Alpha);
+	ApplyLightTransition(SmoothAlpha);
 	const FVector Location = FMath::Lerp(
 		TransitionStartTransform.GetLocation(), TransitionTargetTransform.GetLocation(), SmoothAlpha);
 	const FQuat Rotation = FQuat::Slerp(
@@ -101,6 +119,7 @@ void AHouseMapViewController::StartTransition(const bool bToMap)
 				? NeighborhoodViewpoint->GetActorTransform()
 				: Pawn->GetActorTransform())
 			: SavedNeighborhoodTransform);
+	PrepareLightTransition();
 	ApplyMode(EHouseMapViewMode::Transition, false);
 	SetActorTickEnabled(true);
 }
@@ -119,6 +138,14 @@ void AHouseMapViewController::ApplyMode(
 	SetTaggedActorsVisible(MapTag, bShowMap, bEditorPreview);
 	SetTaggedActorsVisible(MapLabelTag, bShowMap, bEditorPreview);
 	SetTaggedActorsVisible(TransitionCloudTag, bShowClouds, bEditorPreview);
+	SetTaggedActorsVisible(
+		NeighborhoodLightTag,
+		Mode == EHouseMapViewMode::Neighborhood || Mode == EHouseMapViewMode::Transition,
+		bEditorPreview);
+	SetTaggedActorsVisible(
+		MapLightTag,
+		Mode == EHouseMapViewMode::Map || Mode == EHouseMapViewMode::Transition,
+		bEditorPreview);
 }
 
 void AHouseMapViewController::SetTaggedActorsVisible(
@@ -143,6 +170,63 @@ void AHouseMapViewController::SetTaggedActorsVisible(
 			Actor->SetIsTemporarilyHiddenInEditor(!bVisible);
 		}
 #endif
+	}
+}
+
+void AHouseMapViewController::CacheAuthoredLightIntensities()
+{
+	if (!GetWorld())
+	{
+		return;
+	}
+	for (TActorIterator<AActor> It(GetWorld()); It; ++It)
+	{
+		AActor* Actor = *It;
+		if (!Actor->ActorHasTag(NeighborhoodLightTag) && !Actor->ActorHasTag(MapLightTag))
+		{
+			continue;
+		}
+		if (ULightComponent* Light = Actor->FindComponentByClass<ULightComponent>())
+		{
+			AuthoredLightIntensities.FindOrAdd(Light) = Light->Intensity;
+		}
+	}
+}
+
+void AHouseMapViewController::PrepareLightTransition()
+{
+	if (AuthoredLightIntensities.IsEmpty())
+	{
+		CacheAuthoredLightIntensities();
+	}
+	LightTransitionStarts.Reset();
+	LightTransitionTargets.Reset();
+
+	for (const TPair<TWeakObjectPtr<ULightComponent>, float>& Pair : AuthoredLightIntensities)
+	{
+		ULightComponent* Light = Pair.Key.Get();
+		AActor* LightOwner = Light ? Light->GetOwner() : nullptr;
+		if (!Light || !LightOwner)
+		{
+			continue;
+		}
+		const bool bIsMapLight = LightOwner->ActorHasTag(MapLightTag);
+		LightTransitionStarts.Add(Light, Light->Intensity);
+		LightTransitionTargets.Add(Light, bIsMapLight == bTransitionToMap ? Pair.Value : 0.0f);
+		LightOwner->SetActorHiddenInGame(false);
+	}
+}
+
+void AHouseMapViewController::ApplyLightTransition(const float Alpha)
+{
+	for (const TPair<TWeakObjectPtr<ULightComponent>, float>& Pair : LightTransitionTargets)
+	{
+		ULightComponent* Light = Pair.Key.Get();
+		const float* Start = LightTransitionStarts.Find(Pair.Key);
+		if (Light && Start)
+		{
+			Light->SetIntensity(FMath::Lerp(*Start, Pair.Value, Alpha));
+		}
 	}
 }
 

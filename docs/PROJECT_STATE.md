@@ -85,6 +85,9 @@ visual review in Unreal.
   `L_MenuLevel_Editable`: movable neighborhood/aerial viewpoints, an editable
   MAP/HOME toggle, independent neighborhood/map/cloud layers, and separate
   local and aerial location labels with viewport preview modes.
+- Extended the Map View transition to hide the manually placed tree folder and
+  cross-fade the three authored neighborhood lights against an editable global
+  map-view Directional Light.
 
 ## In progress
 
@@ -100,7 +103,8 @@ visual review in Unreal.
 
 - Priority: select `MAP_VIEW_CONTROLLER` in `L_MenuLevel_Editable` and use its
   Neighborhood/Transition/Map editor preview modes to position the aerial
-  viewpoint, replace the map blockout and author transition clouds.
+  viewpoint, replace the map blockout, author transition clouds and tune
+  `MAPVIEW_GLOBAL_DIRECTIONAL_LIGHT_EDIT_ME`.
 
 0. Visually validate and art-direct the new local FogArea volumetrics and
    quality-focused shadow settings in the editable Menu Level.

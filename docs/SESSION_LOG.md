@@ -377,3 +377,19 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Next: replace the map blockout with authored geography, add the production
   cloud layer, position labels/viewpoint in the viewport and test MAP/HOME
   activation through the existing VR pointer in-headset.
+
+## 2026-08-04 — [FORGE] Map View trees and lighting transition
+
+- Included every actor in the `MenuLevel/tree` folder in the neighborhood
+  visibility layer, so all 20 authored trees disappear during the aerial view.
+- Tagged `01_Hero_Sun_Beam`, `02_outer_core` and `03_ambient` as neighborhood
+  lights and added an editable movable Directional Light for the map view.
+- The controller now captures authored light intensities at BeginPlay and
+  smoothly cross-fades neighborhood lighting to the global map light during
+  ascent, reversing the fade during return without hardcoded final values.
+- Added a non-destructive migration utility plus lighting inspection and map
+  verification checks. The UE 5.8 editor target built successfully and the
+  saved level passed verification with 42 neighborhood actors, three local
+  lights and one map light.
+- Next: tune the global light rotation, color and intensity in the viewport,
+  then validate the complete MAP/HOME transition in PIE and the headset.

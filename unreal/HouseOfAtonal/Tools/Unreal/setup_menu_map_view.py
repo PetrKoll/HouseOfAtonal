@@ -136,11 +136,32 @@ neighborhood_folders = (
     "MenuLevel/Hero",
     "MenuLevel/Traffic",
     "MenuLevel/Pedestrians",
+    "MenuLevel/tree",
 )
 for actor in all_actors():
     folder = str(actor.get_folder_path())
-    if any(folder.startswith(prefix) for prefix in neighborhood_folders):
+    if any(folder.lower().startswith(prefix.lower()) for prefix in neighborhood_folders):
         add_tag(actor, TAG_NEIGHBORHOOD)
+
+for actor in all_actors():
+    if actor.get_actor_label().lower() in {
+        "01_hero_sun_beam",
+        "02_outer_core",
+        "03_ambient",
+    }:
+        add_tag(actor, "House.MapView.NeighborhoodLight")
+
+map_light = spawn_or_find(
+    "MAPVIEW_GLOBAL_DIRECTIONAL_LIGHT_EDIT_ME",
+    unreal.DirectionalLight,
+    unreal.Vector(0.0, 0.0, 900.0),
+    unreal.Rotator(-55.0, -30.0, 0.0),
+    "MenuLevel/MapView/06_Lighting",
+)
+map_light_component = map_light.get_component_by_class(unreal.DirectionalLightComponent)
+map_light_component.set_editor_property("intensity", 2.0)
+map_light_component.set_mobility(unreal.ComponentMobility.MOVABLE)
+add_tag(map_light, "House.MapView.MapLight")
 
 # Editable anchors make each future art layer visible and selectable in Outliner.
 anchor_class = unreal.TargetPoint

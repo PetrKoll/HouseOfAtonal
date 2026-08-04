@@ -18,6 +18,7 @@ class HOUSEOFATONAL_API AHouseMapViewController : public AActor
 
 public:
 	AHouseMapViewController();
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Map View|Viewpoints")
@@ -52,6 +53,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map View|Groups")
 	FName MapLabelTag = TEXT("House.MapView.MapLabel");
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map View|Lighting")
+	FName NeighborhoodLightTag = TEXT("House.MapView.NeighborhoodLight");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map View|Lighting")
+	FName MapLightTag = TEXT("House.MapView.MapLight");
+
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Map View|Editor Preview")
 	void ApplyEditorPreview();
 
@@ -76,6 +83,9 @@ private:
 	void StartTransition(bool bToMap);
 	void ApplyMode(EHouseMapViewMode Mode, bool bEditorPreview);
 	void SetTaggedActorsVisible(FName Tag, bool bVisible, bool bEditorPreview) const;
+	void CacheAuthoredLightIntensities();
+	void PrepareLightTransition();
+	void ApplyLightTransition(float Alpha);
 	APawn* ResolvePlayerPawn() const;
 
 	bool bMapViewActive = false;
@@ -86,4 +96,7 @@ private:
 	FTransform TransitionStartTransform;
 	FTransform TransitionTargetTransform;
 	FTransform SavedNeighborhoodTransform;
+	TMap<TWeakObjectPtr<class ULightComponent>, float> AuthoredLightIntensities;
+	TMap<TWeakObjectPtr<class ULightComponent>, float> LightTransitionStarts;
+	TMap<TWeakObjectPtr<class ULightComponent>, float> LightTransitionTargets;
 };

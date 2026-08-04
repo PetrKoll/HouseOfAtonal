@@ -18,6 +18,7 @@ required_labels = {
     "MAPVIEW_TRANSITION_CLOUDS_ATTACH_HERE",
     "MAPVIEW_MAP_BASE_EDIT_ME",
     "MAPVIEW_HOUSE_MARKER_EDIT_ME",
+    "MAPVIEW_GLOBAL_DIRECTIONAL_LIGHT_EDIT_ME",
     "LABEL_LOCAL_SCHOOL_EDIT_ME",
     "LABEL_LOCAL_CITY_CENTER_EDIT_ME",
     "LABEL_MAP_SCHOOL_EDIT_ME",
@@ -35,6 +36,8 @@ for tag in (
     "House.MapView.TransitionCloud",
     "House.MapView.NeighborhoodLabel",
     "House.MapView.MapLabel",
+    "House.MapView.NeighborhoodLight",
+    "House.MapView.MapLight",
 ):
     tag_name = unreal.Name(tag)
     tag_counts[tag] = sum(
