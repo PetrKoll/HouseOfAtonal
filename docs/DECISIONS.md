@@ -362,3 +362,18 @@ the previous one.
   control without paying for individual runtime actors and ticks.
 - Consequence: Editor transforms are the source of truth; runtime instances
   preserve authored scale and rotation offsets while following spline paths.
+
+## D-029 — Keep Menu Level aerial Map View layers directly art-directable
+
+- Date: 2026-08-04
+- Author: [FORGE]
+- Status: accepted
+- Decision: Build the neighborhood, aerial map, transition clouds, local
+  labels and aerial labels as independent tagged actors with movable
+  viewpoints and editor preview modes. Use cloud cover to conceal the world
+  representation swap during a smooth vertical transition.
+- Reason: The designer must be able to switch, position and replace every
+  visual layer directly in the viewport instead of editing one opaque
+  generated Blueprint.
+- Consequence: `BP_HouseMapViewController` coordinates visibility and player
+  movement, while the actual visual content remains ordinary level actors.

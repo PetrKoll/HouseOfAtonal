@@ -360,3 +360,20 @@ Keep entries short. This is a chronological index; the current truth belongs in
   records into `L_MenuLevel_Editable`.
 - Next: visually validate the eight manager entries in PIE before changing any
   additional traffic behavior.
+
+## 2026-08-04 — [FORGE] Modular Menu Level aerial Map View foundation
+
+- Backed up the original `L_MenuLevel_Editable` outside the repository with
+  its Git revision and SHA-256 checksum before modifying the map.
+- Added a smooth forward/return Map View controller with a cloud-covered world
+  swap, movable neighborhood and aerial viewpoints, and editor preview modes.
+- Added an editable MAP/HOME toggle actor and reusable spatial location-label
+  actor, with initial School and City Center labels for both view modes.
+- Added independent tagged layers and Outliner anchors for neighborhood,
+  aerial-map, transition-cloud and label art direction, plus a replaceable map
+  base and house marker blockout.
+- Built `HouseOfAtonalEditor Win64 Development` successfully and verified all
+  required actors, unique labels and group tags through UE 5.8.
+- Next: replace the map blockout with authored geography, add the production
+  cloud layer, position labels/viewpoint in the viewport and test MAP/HOME
+  activation through the existing VR pointer in-headset.

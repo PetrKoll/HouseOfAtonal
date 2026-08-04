@@ -1,6 +1,6 @@
 # Project State
 
-Last updated: 2026-07-31
+Last updated: 2026-08-04
 Last updated by: [FORGE]
 
 ## Project
@@ -81,6 +81,10 @@ visual review in Unreal.
 - Re-exported the cleaned house source after removing the accidentally included
   heavy geometry. The exchange FBX dropped from 288 MB to 4.5 MB and the
   rebuilt `SM_HeroHouse` package dropped from 260 MB to 2.7 MB.
+- Added the first modular aerial Map View foundation to
+  `L_MenuLevel_Editable`: movable neighborhood/aerial viewpoints, an editable
+  MAP/HOME toggle, independent neighborhood/map/cloud layers, and separate
+  local and aerial location labels with viewport preview modes.
 
 ## In progress
 
@@ -89,8 +93,14 @@ visual review in Unreal.
 - Tuning arrival points and basic navigation in `L_ViewLevel`.
 - Replacing blockout context with the user's imported surrounding buildings
   and manually placing instanced vegetation.
+- Art-directing the aerial map representation, transition cloud layer,
+  location labels and final VR interaction for the MAP/HOME toggle.
 
 ## Next actions
+
+- Priority: select `MAP_VIEW_CONTROLLER` in `L_MenuLevel_Editable` and use its
+  Neighborhood/Transition/Map editor preview modes to position the aerial
+  viewpoint, replace the map blockout and author transition clouds.
 
 0. Visually validate and art-direct the new local FogArea volumetrics and
    quality-focused shadow settings in the editable Menu Level.
