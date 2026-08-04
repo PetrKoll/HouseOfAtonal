@@ -7,6 +7,8 @@
 class UButton;
 class UCanvasPanel;
 class USizeBox;
+class UTextBlock;
+class AHouseMapViewController;
 
 /** Three-destination selector used only in the initial Menu Level. */
 UCLASS(BlueprintType)
@@ -43,6 +45,8 @@ private:
 	UFUNCTION() void SelectAtrium();
 	UFUNCTION() void SelectRoomOne();
 	UFUNCTION() void SelectRoomTwo();
+	UFUNCTION() void ToggleMapView();
+	UFUNCTION() void HandleMapViewModeChanged(bool bIsMapView);
 
 	UPROPERTY(Transient)
 	TObjectPtr<UCanvasPanel> RootCanvas;
@@ -52,4 +56,10 @@ private:
 
 	UPROPERTY(Transient)
 	TArray<TObjectPtr<USizeBox>> Visuals;
+
+	UPROPERTY(Transient)
+	TObjectPtr<UTextBlock> MapButtonText;
+
+	UPROPERTY(Transient)
+	TObjectPtr<AHouseMapViewController> MapViewController;
 };

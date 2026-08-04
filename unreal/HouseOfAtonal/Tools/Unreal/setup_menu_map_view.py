@@ -138,10 +138,25 @@ neighborhood_folders = (
     "MenuLevel/Pedestrians",
     "MenuLevel/tree",
 )
+neighborhood_folder_names = {
+    "tree", "trees", "lampy", "house lights", "house_lights", "fog_neighbourhood"
+}
 for actor in all_actors():
     folder = str(actor.get_folder_path())
-    if any(folder.lower().startswith(prefix.lower()) for prefix in neighborhood_folders):
+    folder_parts = {
+        part.strip().lower() for part in folder.replace("\\", "/").split("/")
+    }
+    if (any(folder.lower().startswith(prefix.lower()) for prefix in neighborhood_folders)
+            or folder_parts.intersection(neighborhood_folder_names)):
         add_tag(actor, TAG_NEIGHBORHOOD)
+
+for actor in all_actors():
+    folder = str(actor.get_folder_path())
+    folder_parts = {
+        part.strip().lower() for part in folder.replace("\\", "/").split("/")
+    }
+    if "fog_map" in folder_parts:
+        add_tag(actor, TAG_MAP)
 
 for actor in all_actors():
     if actor.get_actor_label().lower() in {

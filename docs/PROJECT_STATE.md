@@ -88,6 +88,9 @@ visual review in Unreal.
 - Extended the Map View transition to hide the manually placed tree folder and
   cross-fade the three authored neighborhood lights against an editable global
   map-view Directional Light.
+- Added the runtime MAP/HOME control directly to the Menu Level VR selector and
+  extended the world swap to neighborhood lamps, house lights and fog, with a
+  separate `fog_map` layer shown only in aerial Map View.
 
 ## In progress
 
@@ -105,6 +108,8 @@ visual review in Unreal.
   Neighborhood/Transition/Map editor preview modes to position the aerial
   viewpoint, replace the map blockout, author transition clouds and tune
   `MAPVIEW_GLOBAL_DIRECTIONAL_LIGHT_EDIT_ME`.
+- Validate the new fourth MAP/HOME selector button with the right-controller
+  pointer in the headset and art-direct both fog folders during the transition.
 
 0. Visually validate and art-direct the new local FogArea volumetrics and
    quality-focused shadow settings in the editable Menu Level.

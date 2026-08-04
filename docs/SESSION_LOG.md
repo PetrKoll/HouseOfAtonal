@@ -393,3 +393,20 @@ Keep entries short. This is a chronological index; the current truth belongs in
   lights and one map light.
 - Next: tune the global light rotation, color and intensity in the viewport,
   then validate the complete MAP/HOME transition in PIE and the headset.
+
+## 2026-08-04 — [FORGE] Headset Map View control and fog layers
+
+- Moved the functional MAP/HOME action into the existing Menu Level VR widget
+  as a fourth button below the destination selector, using the same right-hand
+  widget pointer and trigger interaction as the established controls.
+- Added folder-driven visibility for `tree`, `Lighting/lampy`,
+  `Lighting/house_lights` and `fog_neighbourhood`; `fog_map` now belongs to the
+  aerial layer and is hidden in the neighborhood view.
+- Made layer migration resilient to folder nesting, capitalization and the
+  existing `house_lights` underscore spelling without resetting other map
+  authoring changes.
+- Built `HouseOfAtonalEditor Win64 Development` successfully and verified the
+  saved level with 60 neighborhood-tagged actors, four map-tagged actors and no
+  missing or duplicate required Map View actors.
+- Next: test MAP/HOME in the headset, then tune both fog layers and the map
+  Directional Light in their respective Outliner folders.

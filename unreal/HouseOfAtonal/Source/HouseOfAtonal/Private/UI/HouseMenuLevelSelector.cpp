@@ -10,9 +10,11 @@
 #include "Components/SizeBox.h"
 #include "Components/TextBlock.h"
 #include "Experience/HouseExperienceSubsystem.h"
+#include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "Styling/SlateBrush.h"
 #include "UI/HouseFilledCircleWidget.h"
+#include "World/HouseMapViewController.h"
 
 void UHouseMenuLevelSelector::NativeOnInitialized()
 {
@@ -38,17 +40,39 @@ void UHouseMenuLevelSelector::BuildSelector()
 {
 	RootCanvas = WidgetTree->ConstructWidget<UCanvasPanel>();
 	WidgetTree->RootWidget = RootCanvas;
-	Buttons.SetNum(3);
-	Visuals.SetNum(3);
+	Buttons.SetNum(4);
+	Visuals.SetNum(4);
 	CreateDestination(0, FVector2D(0.0f, -72.0f), FText::FromString(TEXT("A")));
 	CreateDestination(1, FVector2D(-76.0f, 58.0f), FText::FromString(TEXT("1")));
 	CreateDestination(2, FVector2D(76.0f, 58.0f), FText::FromString(TEXT("2")));
+	CreateDestination(3, FVector2D(0.0f, 188.0f), FText::FromString(TEXT("MAP")));
 	Buttons[0]->OnClicked.AddUniqueDynamic(
 		this, &UHouseMenuLevelSelector::SelectAtrium);
 	Buttons[1]->OnClicked.AddUniqueDynamic(
 		this, &UHouseMenuLevelSelector::SelectRoomOne);
 	Buttons[2]->OnClicked.AddUniqueDynamic(
 		this, &UHouseMenuLevelSelector::SelectRoomTwo);
+	Buttons[3]->OnClicked.AddUniqueDynamic(
+		this, &UHouseMenuLevelSelector::ToggleMapView);
+
+	if (UOverlay* MapOverlay = Cast<UOverlay>(Visuals[3]->GetChildAt(0)))
+	{
+		MapButtonText = Cast<UTextBlock>(MapOverlay->GetChildAt(1));
+	}
+	if (UWorld* World = GetWorld())
+	{
+		for (TActorIterator<AHouseMapViewController> It(World); It; ++It)
+		{
+			MapViewController = *It;
+			break;
+		}
+	}
+	if (IsValid(MapViewController))
+	{
+		MapViewController->OnMapViewModeChanged.AddUniqueDynamic(
+			this, &UHouseMenuLevelSelector::HandleMapViewModeChanged);
+		HandleMapViewModeChanged(MapViewController->IsInMapView());
+	}
 }
 
 void UHouseMenuLevelSelector::CreateDestination(
@@ -134,4 +158,20 @@ void UHouseMenuLevelSelector::SelectRoomOne()
 void UHouseMenuLevelSelector::SelectRoomTwo()
 {
 	TravelTo(EHouseLocation::RoomTwo);
+}
+
+void UHouseMenuLevelSelector::ToggleMapView()
+{
+	if (IsValid(MapViewController))
+	{
+		MapViewController->ToggleMapView();
+	}
+}
+
+void UHouseMenuLevelSelector::HandleMapViewModeChanged(const bool bIsMapView)
+{
+	if (IsValid(MapButtonText))
+	{
+		MapButtonText->SetText(FText::FromString(bIsMapView ? TEXT("HOME") : TEXT("MAP")));
+	}
 }
