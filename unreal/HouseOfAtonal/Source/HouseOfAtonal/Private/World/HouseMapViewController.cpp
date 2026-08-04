@@ -113,15 +113,15 @@ void AHouseMapViewController::StartTransition(const bool bToMap)
 	FVector TargetLocation = Pawn->GetActorLocation();
 	if (bToMap)
 	{
-		TargetLocation.Z = MapViewpoint->GetActorLocation().Z;
+		TargetLocation = MapViewpoint->GetActorLocation();
 	}
 	else if (!SavedNeighborhoodTransform.Equals(FTransform::Identity))
 	{
-		TargetLocation.Z = SavedNeighborhoodTransform.GetLocation().Z;
+		TargetLocation = SavedNeighborhoodTransform.GetLocation();
 	}
 	else if (IsValid(NeighborhoodViewpoint))
 	{
-		TargetLocation.Z = NeighborhoodViewpoint->GetActorLocation().Z;
+		TargetLocation = NeighborhoodViewpoint->GetActorLocation();
 	}
 	TransitionTargetTransform = Pawn->GetActorTransform();
 	TransitionTargetTransform.SetLocation(TargetLocation);

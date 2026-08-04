@@ -420,3 +420,14 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Built `HouseOfAtonalEditor Win64 Development` successfully.
 - Next: validate comfort and target height in the headset; adjust the aerial
   viewpoint's Z position if a higher or lower map view is needed.
+
+## 2026-08-04 — [FORGE] Editable Map View destination correction
+
+- Corrected the prior vertical-only constraint after confirming that it made
+  the aerial viewpoint's X/Y placement ineffective. The transition now reaches
+  the complete authored position of `MAPVIEW_AERIAL_VIEWPOINT_EDIT_ME` while
+  still ignoring its rotation and preserving the user's orientation.
+- Confirmed the saved controller references the intended aerial viewpoint and
+  reads its current authored location `(-1481, -1619, 4309)`.
+- Next: validate the authored endpoint and comfort in the headset; keep the
+  viewpoint directly above the start when a strictly vertical path is desired.

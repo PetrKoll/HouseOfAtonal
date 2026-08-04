@@ -19,6 +19,14 @@ for actor in actors:
             f"MAP_VIEW_KEY_ACTOR={label}|{actor.get_class().get_name()}|"
             f"{actor.get_actor_location()}|{actor.get_actor_rotation()}|{folder}"
         )
+    if label == "MAP_VIEW_CONTROLLER":
+        neighborhood = actor.get_editor_property("neighborhood_viewpoint")
+        aerial = actor.get_editor_property("map_viewpoint")
+        unreal.log(
+            "MAP_VIEW_CONTROLLER_REFS="
+            f"{neighborhood.get_actor_label() if neighborhood else None}|"
+            f"{aerial.get_actor_label() if aerial else None}"
+        )
 
 locations = [actor.get_actor_location() for actor in actors if not actor.is_hidden_ed()]
 if locations:
