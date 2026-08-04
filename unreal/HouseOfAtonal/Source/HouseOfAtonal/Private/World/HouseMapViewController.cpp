@@ -50,9 +50,7 @@ void AHouseMapViewController::Tick(const float DeltaSeconds)
 	ApplyLightTransition(SmoothAlpha);
 	const FVector Location = FMath::Lerp(
 		TransitionStartTransform.GetLocation(), TransitionTargetTransform.GetLocation(), SmoothAlpha);
-	const FQuat Rotation = FQuat::Slerp(
-		TransitionStartTransform.GetRotation(), TransitionTargetTransform.GetRotation(), SmoothAlpha);
-	Pawn->SetActorLocationAndRotation(Location, Rotation.Rotator());
+	Pawn->SetActorLocation(Location);
 
 	if (!bWorldSwapped && Alpha >= WorldSwapAlpha)
 	{
@@ -62,7 +60,7 @@ void AHouseMapViewController::Tick(const float DeltaSeconds)
 
 	if (Alpha >= 1.0f)
 	{
-		Pawn->SetActorTransform(TransitionTargetTransform);
+		Pawn->SetActorLocation(TransitionTargetTransform.GetLocation());
 		bTransitionActive = false;
 		bMapViewActive = bTransitionToMap;
 		SetActorTickEnabled(false);
@@ -112,13 +110,21 @@ void AHouseMapViewController::StartTransition(const bool bToMap)
 	bWorldSwapped = false;
 	TransitionElapsed = 0.0f;
 	TransitionStartTransform = Pawn->GetActorTransform();
-	TransitionTargetTransform = bToMap
-		? MapViewpoint->GetActorTransform()
-		: (SavedNeighborhoodTransform.Equals(FTransform::Identity)
-			? (IsValid(NeighborhoodViewpoint)
-				? NeighborhoodViewpoint->GetActorTransform()
-				: Pawn->GetActorTransform())
-			: SavedNeighborhoodTransform);
+	FVector TargetLocation = Pawn->GetActorLocation();
+	if (bToMap)
+	{
+		TargetLocation.Z = MapViewpoint->GetActorLocation().Z;
+	}
+	else if (!SavedNeighborhoodTransform.Equals(FTransform::Identity))
+	{
+		TargetLocation.Z = SavedNeighborhoodTransform.GetLocation().Z;
+	}
+	else if (IsValid(NeighborhoodViewpoint))
+	{
+		TargetLocation.Z = NeighborhoodViewpoint->GetActorLocation().Z;
+	}
+	TransitionTargetTransform = Pawn->GetActorTransform();
+	TransitionTargetTransform.SetLocation(TargetLocation);
 	PrepareLightTransition();
 	ApplyMode(EHouseMapViewMode::Transition, false);
 	SetActorTickEnabled(true);

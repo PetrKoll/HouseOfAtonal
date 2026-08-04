@@ -91,6 +91,8 @@ visual review in Unreal.
 - Added the runtime MAP/HOME control directly to the Menu Level VR selector and
   extended the world swap to neighborhood lamps, house lights and fog, with a
   separate `fog_map` layer shown only in aerial Map View.
+- Constrained the Map View pawn transition to the vertical axis only; it keeps
+  the user's horizontal position and orientation unchanged in both directions.
 
 ## In progress
 

@@ -410,3 +410,13 @@ Keep entries short. This is a chronological index; the current truth belongs in
   missing or duplicate required Map View actors.
 - Next: test MAP/HOME in the headset, then tune both fog layers and the map
   Directional Light in their respective Outliner folders.
+
+## 2026-08-04 — [FORGE] Vertical-only Map View movement
+
+- Removed pawn rotation and horizontal translation from the MAP/HOME
+  transition. The aerial viewpoint now supplies only the target Z height, so
+  the user moves straight up and down while retaining their current position
+  and viewing orientation.
+- Built `HouseOfAtonalEditor Win64 Development` successfully.
+- Next: validate comfort and target height in the headset; adjust the aerial
+  viewpoint's Z position if a higher or lower map view is needed.
