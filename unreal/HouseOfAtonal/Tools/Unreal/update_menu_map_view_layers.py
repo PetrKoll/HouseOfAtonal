@@ -8,7 +8,7 @@ TAG_MAP = unreal.Name("House.MapView.Map")
 NEIGHBORHOOD_FOLDER_NAMES = {
     "tree", "trees", "lampy", "house lights", "house_lights", "fog_neighbourhood"
 }
-MAP_FOLDER_NAMES = {"fog_map"}
+MAP_FOLDER_NAMES = {"fog_map", "map_geometry"}
 
 
 level_subsystem = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
@@ -29,6 +29,7 @@ matched_folders = set()
 lighting_folders = set()
 for actor in actor_subsystem.get_all_level_actors():
     folder = str(actor.get_folder_path())
+    label_lower = actor.get_actor_label().strip().lower()
     folder_parts = {part.strip().lower() for part in folder.replace("\\", "/").split("/")}
     if "light" in folder.lower() or "house" in folder.lower():
         lighting_folders.add(folder)
@@ -36,10 +37,10 @@ for actor in actor_subsystem.get_all_level_actors():
         add_tag(actor, TAG_NEIGHBORHOOD)
         counts["neighborhood"] += 1
         matched_folders.add(folder)
-    if folder_parts.intersection(MAP_FOLDER_NAMES):
+    if folder_parts.intersection(MAP_FOLDER_NAMES) or label_lower == "map_geometry":
         add_tag(actor, TAG_MAP)
         counts["map"] += 1
-        matched_folders.add(folder)
+        matched_folders.add(folder or f"Actor:{actor.get_actor_label()}")
 
 if not level_subsystem.save_current_level():
     raise RuntimeError(f"Could not save {MAP_PATH}")

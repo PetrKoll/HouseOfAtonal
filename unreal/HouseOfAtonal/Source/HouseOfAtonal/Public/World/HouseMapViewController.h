@@ -11,6 +11,22 @@ enum class EHouseMapViewMode : uint8
 	Transition,
 	Map
 };
+
+USTRUCT(BlueprintType)
+struct FHouseMapVisibilityRule
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Visibility")
+	TObjectPtr<AActor> Actor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Visibility")
+	bool bVisibleInNeighborhood = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Visibility")
+	bool bVisibleInMap = false;
+};
+
 UCLASS(BlueprintType, Blueprintable)
 class HOUSEOFATONAL_API AHouseMapViewController : public AActor
 {
@@ -59,6 +75,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map View|Lighting")
 	FName MapLightTag = TEXT("House.MapView.MapLight");
 
+	/** Optional per-actor overrides applied after the automatic tagged groups. */
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Map View|Custom Visibility",
+		meta = (TitleProperty = "Actor"))
+	TArray<FHouseMapVisibilityRule> VisibilityRules;
+
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Map View|Editor Preview")
 	void ApplyEditorPreview();
 
@@ -83,6 +104,7 @@ private:
 	void StartTransition(bool bToMap);
 	void ApplyMode(EHouseMapViewMode Mode, bool bEditorPreview);
 	void SetTaggedActorsVisible(FName Tag, bool bVisible, bool bEditorPreview) const;
+	void ApplyCustomVisibilityRules(EHouseMapViewMode Mode, bool bEditorPreview) const;
 	void CacheAuthoredLightIntensities();
 	void PrepareLightTransition();
 	void ApplyLightTransition(float Alpha);

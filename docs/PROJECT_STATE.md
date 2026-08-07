@@ -1,6 +1,6 @@
 # Project State
 
-Last updated: 2026-08-04
+Last updated: 2026-08-07
 Last updated by: [FORGE]
 
 ## Project
@@ -94,6 +94,9 @@ visual review in Unreal.
 - The Map View pawn transition uses the full editable viewpoint position while
   preserving the user's orientation; viewpoint rotation is intentionally
   ignored in both directions.
+- Added a per-actor visibility-rule table to `MAP_VIEW_CONTROLLER`, allowing
+  arbitrary actors to be independently enabled for Neighborhood and Map
+  preview/runtime states. The `map_geometry` actor is automatically Map-only.
 
 ## In progress
 
@@ -113,6 +116,8 @@ visual review in Unreal.
   `MAPVIEW_GLOBAL_DIRECTIONAL_LIGHT_EDIT_ME`.
 - Validate the new fourth MAP/HOME selector button with the right-controller
   pointer in the headset and art-direct both fog folders during the transition.
+- Use `Map View > Custom Visibility` on `MAP_VIEW_CONTROLLER` for exceptions
+  that should override the automatic folder/tag visibility groups.
 
 0. Visually validate and art-direct the new local FogArea volumetrics and
    quality-focused shadow settings in the editable Menu Level.

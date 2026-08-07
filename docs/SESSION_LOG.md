@@ -431,3 +431,19 @@ Keep entries short. This is a chronological index; the current truth belongs in
   reads its current authored location `(-1481, -1619, 4309)`.
 - Next: validate the authored endpoint and comfort in the headset; keep the
   viewpoint directly above the start when a strictly vertical path is desired.
+
+## 2026-08-07 — [FORGE] Editable Map View visibility table
+
+- Added an instance-editable `Custom Visibility` table to
+  `MAP_VIEW_CONTROLLER`. Each row references an arbitrary level actor and
+  independently controls its Neighborhood and Map visibility; these rules are
+  applied after automatic tags and therefore act as explicit overrides.
+- Transition visibility follows the phase being left until the world swap, so
+  custom actors do not appear or disappear prematurely under the cloud cover.
+- Added automatic Map-only tagging for an actor named `map_geometry` or actors
+  placed inside a `map_geometry` folder, while retaining existing `fog_map`
+  handling.
+- Built the UE 5.8 editor target successfully and verified the saved level with
+  no missing or duplicate Map View actors and six actors in the Map tag group.
+- Next: populate custom visibility rows only for exceptions; continue using
+  folder/tag groups for large batches of related actors.

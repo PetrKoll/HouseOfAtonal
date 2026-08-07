@@ -155,7 +155,8 @@ for actor in all_actors():
     folder_parts = {
         part.strip().lower() for part in folder.replace("\\", "/").split("/")
     }
-    if "fog_map" in folder_parts:
+    if (folder_parts.intersection({"fog_map", "map_geometry"})
+            or actor.get_actor_label().strip().lower() == "map_geometry"):
         add_tag(actor, TAG_MAP)
 
 for actor in all_actors():

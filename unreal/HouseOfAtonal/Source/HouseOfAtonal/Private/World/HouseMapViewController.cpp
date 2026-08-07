@@ -152,6 +152,34 @@ void AHouseMapViewController::ApplyMode(
 		MapLightTag,
 		Mode == EHouseMapViewMode::Map || Mode == EHouseMapViewMode::Transition,
 		bEditorPreview);
+	ApplyCustomVisibilityRules(Mode, bEditorPreview);
+}
+
+void AHouseMapViewController::ApplyCustomVisibilityRules(
+	const EHouseMapViewMode Mode, const bool bEditorPreview) const
+{
+	for (const FHouseMapVisibilityRule& Rule : VisibilityRules)
+	{
+		if (!IsValid(Rule.Actor))
+		{
+			continue;
+		}
+
+		const bool bVisible = Mode == EHouseMapViewMode::Neighborhood
+			? Rule.bVisibleInNeighborhood
+			: Mode == EHouseMapViewMode::Map
+				? Rule.bVisibleInMap
+				: (bTransitionToMap
+					? Rule.bVisibleInNeighborhood
+					: Rule.bVisibleInMap);
+		Rule.Actor->SetActorHiddenInGame(!bVisible);
+#if WITH_EDITOR
+		if (bEditorPreview)
+		{
+			Rule.Actor->SetIsTemporarilyHiddenInEditor(!bVisible);
+		}
+#endif
+	}
 }
 
 void AHouseMapViewController::SetTaggedActorsVisible(
