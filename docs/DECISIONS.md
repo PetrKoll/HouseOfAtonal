@@ -395,3 +395,18 @@ the previous one.
   the placed controller for visual tuning. Rain and Fog use distinct morning,
   afternoon and night cloud/fog targets rather than flattening the three
   authored time states into one weather appearance.
+
+## D-031 — Bind authored View lighting to the three time states
+
+- Date: 2026-08-27
+- Author: [FORGE]
+- Status: accepted
+- Decision: Actors authored in `time_01`, `time_02` and `time_03` are stored as
+  explicit controller references and only the active state's group is visible.
+  Runtime dynamic instances of `MI_light_bulb_A` use Intensity 0 in states
+  01/02 and 1000 in state 03.
+- Reason: Each time preset needs its own art-directed practical lighting, and
+  the chandelier bulb should emit only in the night preset.
+- Consequence: Moving a light between time folders requires rerunning the View
+  time/weather configuration utility so packaged builds receive updated actor
+  references.

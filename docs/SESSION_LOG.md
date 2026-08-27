@@ -491,3 +491,14 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Built `HouseOfAtonalEditor Win64 Development` successfully.
 - Next: validate airborne drops, rain visibility and all nine time/weather
   combinations in the headset, then tune the exposed controller values.
+
+## 2026-08-27 — [FORGE] Time-state light groups and night bulbs
+
+- Bound one `time_01`, three `time_02` and three `time_03` actors to the matching
+  `HouseTimeController` state; inactive groups are hidden at runtime.
+- Located the sole `MI_light_bulb_A` use on `masterhouse` / `lustr` slot 3 and
+  added a runtime dynamic material override: Intensity 0 by day, 1000 at night.
+- Built `HouseOfAtonalEditor Win64 Development` successfully and saved the seven
+  actor references into `L_ViewLevel`.
+- Next: verify the three practical-light compositions and chandelier emissive
+  transition in PIE/headset.

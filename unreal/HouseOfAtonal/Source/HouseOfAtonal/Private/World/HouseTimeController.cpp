@@ -3,6 +3,8 @@
 #include "Experience/HouseExperienceSubsystem.h"
 #include "Components/ActorComponent.h"
 #include "EngineUtils.h"
+#include "Components/MeshComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "UObject/UnrealType.h"
 
 namespace
@@ -30,6 +32,7 @@ void AHouseTimeController::BeginPlay()
 {
 	Super::BeginPlay();
 	ResolveRainActors();
+	InitializeLightBulbMaterials();
 
 	if (UGameInstance* GameInstance = GetGameInstance())
 	{
@@ -160,6 +163,8 @@ void AHouseTimeController::PreviewSelectedTimeState()
 void AHouseTimeController::SetTimeState(const EHouseTimeState NewState, const bool bInstant)
 {
 	CurrentTimeState = NewState;
+	SetTimeStateContentVisibility(NewState);
+	SetLightBulbIntensity(NewState == EHouseTimeState::State03 ? 1000.0f : 0.0f);
 	const FHouseTimeProfile& TargetProfile = GetProfile(NewState);
 	TransitionTarget = NormalizeUDSTime(TargetProfile.TimeOfDay);
 
@@ -201,6 +206,67 @@ void AHouseTimeController::SetTimeState(const EHouseTimeState NewState, const bo
 		CurrentWeather == EHouseWeatherPreset::Fog)
 	{
 		SetWeather(CurrentWeather);
+	}
+}
+
+void AHouseTimeController::SetTimeStateContentVisibility(const EHouseTimeState ActiveState) const
+{
+	const auto SetGroupVisible = [](const TArray<TObjectPtr<AActor>>& Actors, const bool bVisible)
+	{
+		for (AActor* Actor : Actors)
+		{
+			if (IsValid(Actor))
+			{
+				Actor->SetActorHiddenInGame(!bVisible);
+			}
+		}
+	};
+
+	SetGroupVisible(TimeState01Actors, ActiveState == EHouseTimeState::State01);
+	SetGroupVisible(TimeState02Actors, ActiveState == EHouseTimeState::State02);
+	SetGroupVisible(TimeState03Actors, ActiveState == EHouseTimeState::State03);
+}
+
+void AHouseTimeController::InitializeLightBulbMaterials()
+{
+	LightBulbMaterials.Reset();
+	if (!GetWorld())
+	{
+		return;
+	}
+
+	for (TActorIterator<AActor> ActorIt(GetWorld()); ActorIt; ++ActorIt)
+	{
+		TInlineComponentArray<UMeshComponent*> MeshComponents(*ActorIt);
+		for (UMeshComponent* MeshComponent : MeshComponents)
+		{
+			for (int32 MaterialIndex = 0; MaterialIndex < MeshComponent->GetNumMaterials(); ++MaterialIndex)
+			{
+				UMaterialInterface* Material = MeshComponent->GetMaterial(MaterialIndex);
+				if (!IsValid(Material) ||
+					!Material->GetPathName().Contains(TEXT("/MI_light_bulb_A.")))
+				{
+					continue;
+				}
+
+				if (UMaterialInstanceDynamic* DynamicMaterial =
+					MeshComponent->CreateDynamicMaterialInstance(MaterialIndex, Material))
+				{
+					LightBulbMaterials.Add(DynamicMaterial);
+				}
+			}
+		}
+	}
+}
+
+void AHouseTimeController::SetLightBulbIntensity(const float Intensity) const
+{
+	for (UMaterialInstanceDynamic* Material : LightBulbMaterials)
+	{
+		if (IsValid(Material))
+		{
+			Material->SetScalarParameterValue(TEXT("Intensity"), Intensity);
+		}
 	}
 }
 

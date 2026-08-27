@@ -5,6 +5,8 @@
 #include "GameFramework/Actor.h"
 #include "HouseTimeController.generated.h"
 
+class UMaterialInstanceDynamic;
+
 UENUM(BlueprintType)
 enum class EHouseTimeState : uint8
 {
@@ -71,6 +73,18 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Time Controller|States")
 	FHouseTimeProfile TimeState03;
+
+	/** Actors authored inside the time_01 folder. Populated by the level setup utility. */
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Time Controller|State Content")
+	TArray<TObjectPtr<AActor>> TimeState01Actors;
+
+	/** Actors authored inside the time_02 folder. Populated by the level setup utility. */
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Time Controller|State Content")
+	TArray<TObjectPtr<AActor>> TimeState02Actors;
+
+	/** Actors authored inside the time_03 folder. Populated by the level setup utility. */
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Time Controller|State Content")
+	TArray<TObjectPtr<AActor>> TimeState03Actors;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Time Controller|Transition",
 		meta = (ClampMin = "0.0", UIMin = "0.0", UIMax = "30.0", Units = "s"))
@@ -171,6 +185,9 @@ private:
 	float GetFogAmount() const;
 	void ResolveRainActors();
 	void SetRainEnabled(bool bEnabled) const;
+	void SetTimeStateContentVisibility(EHouseTimeState ActiveState) const;
+	void InitializeLightBulbMaterials();
+	void SetLightBulbIntensity(float Intensity) const;
 
 	bool bTransitionActive = false;
 	float TransitionElapsed = 0.0f;
@@ -184,4 +201,7 @@ private:
 	float WeatherStartFog = 0.0f;
 	float WeatherTargetFog = 0.0f;
 	EHouseWeatherPreset CurrentWeather = EHouseWeatherPreset::Clear;
+
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<UMaterialInstanceDynamic>> LightBulbMaterials;
 };

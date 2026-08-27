@@ -111,6 +111,9 @@ visual review in Unreal.
   targets, preserving readable time-of-day differences in every weather mode.
   The two local EasyRain emitters were raised to the demo-authored height so
   airborne streaks can render in addition to ground splashes.
+- The `time_01`, `time_02` and `time_03` View Level light folders are bound to
+  their matching time states so only one authored light group is visible. The
+  chandelier `MI_light_bulb_A` Intensity is 0 for states 01/02 and 1000 at night.
 
 ## In progress
 
