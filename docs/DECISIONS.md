@@ -377,3 +377,19 @@ the previous one.
   generated Blueprint.
 - Consequence: `BP_HouseMapViewController` coordinates visibility and player
   movement, while the actual visual content remains ordinary level actors.
+
+## D-030 — Keep View Level time transitions narrow and weather project-owned
+
+- Date: 2026-08-27
+- Author: [FORGE]
+- Status: accepted
+- Decision: The three Control Menu time options map directly to the three
+  authored `HouseTimeController` states and interpolate only UDS Time of Day.
+  View weather is Sunny, Rain and Fog; the same project controller smoothly
+  drives UDS cloud/fog values and toggles the existing fixed EasyRain actors.
+- Reason: Interpolating all 599 captured UDS properties through reflection each
+  frame caused unacceptable VR hitches. Fixed rain coverage around the authored
+  house also avoids a visibly player-following emitter.
+- Consequence: Full UDS snapshots remain useful for editor capture/preview but
+  are not replayed during runtime time changes. Weather values stay editable on
+  the placed controller for visual tuning.

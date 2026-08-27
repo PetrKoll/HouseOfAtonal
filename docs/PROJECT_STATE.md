@@ -101,6 +101,12 @@ visual review in Unreal.
   while preserving its approved circle geometry, hover, pinning and motion.
 - Increased Control Menu icon stroke weight for VR legibility and connected
   its destination options to the three authored View Level arrival points.
+- Connected the View Level time choices directly to the three authored
+  `HouseTimeController` states and reduced runtime time interpolation from a
+  599-property UDS snapshot to the single Time of Day value.
+- Defined the View Level weather choices as Sunny, Rain and Fog. Rain and fog
+  smoothly increase UDS cloud coverage, fog also increases the UDS fog value,
+  and the two authored EasyRain actors are activated only for Rain.
 
 ## In progress
 
@@ -138,7 +144,8 @@ visual review in Unreal.
    only forward movement reliably; lateral and reverse input are unresolved.
 9. Move and rotate `ARRIVAL_ATRIUM`, `ARRIVAL_ROOM_1` and `ARRIVAL_ROOM_2`
    inside the finished house spaces.
-10. Define the final weather and time option sets.
+10. Tune the Rain/Fog cloud coverage and fog values in `TIME_HouseTimeController`
+    after visual VR review.
 11. Replace the locked V1 number labels with final icons without changing its
     approved geometry, hover, pinning or motion.
 12. Connect the locked menu selections to destination, weather and time state.
@@ -146,7 +153,8 @@ visual review in Unreal.
     environment objects exist.
 14. Test spawn placement, delayed following and category behavior in headset.
 15. Record exact versions of Ultra Dynamic Sky and other local dependencies.
-16. Connect approved weather and time behavior to Ultra Dynamic Sky.
+16. Validate smooth time and weather transitions in-headset and profile any
+    remaining UDS-side hitch.
 
 ## Blockers
 

@@ -1,6 +1,8 @@
 #include "World/HouseTimeController.h"
 
 #include "Experience/HouseExperienceSubsystem.h"
+#include "Components/ActorComponent.h"
+#include "EngineUtils.h"
 #include "UObject/UnrealType.h"
 
 namespace
@@ -27,6 +29,7 @@ AHouseTimeController::AHouseTimeController()
 void AHouseTimeController::BeginPlay()
 {
 	Super::BeginPlay();
+	ResolveRainActors();
 
 	if (UGameInstance* GameInstance = GetGameInstance())
 	{
@@ -35,8 +38,11 @@ void AHouseTimeController::BeginPlay()
 		{
 			Experience->OnTimeChanged.AddUniqueDynamic(
 				this, &AHouseTimeController::HandleExperienceTimeChanged);
+			Experience->OnWeatherChanged.AddUniqueDynamic(
+				this, &AHouseTimeController::HandleExperienceWeatherChanged);
 			CurrentTimeState = MapExperienceTime(Experience->GetTimeOfDay());
 			SetTimeState(CurrentTimeState, true);
+			SetWeather(Experience->GetWeather(), true);
 			return;
 		}
 	}
@@ -44,53 +50,74 @@ void AHouseTimeController::BeginPlay()
 	SetTimeState(CurrentTimeState, true);
 }
 
+void AHouseTimeController::ResolveRainActors()
+{
+	RainActors.RemoveAll([](const TObjectPtr<AActor>& Actor)
+	{
+		return !IsValid(Actor);
+	});
+	if (!RainActors.IsEmpty() || !GetWorld())
+	{
+		return;
+	}
+
+	for (TActorIterator<AActor> It(GetWorld()); It; ++It)
+	{
+		if (It->GetClass()->GetPathName().Contains(TEXT("/EasyRain/")))
+		{
+			RainActors.Add(*It);
+		}
+	}
+}
+
 void AHouseTimeController::Tick(const float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if (!bTransitionActive)
+	if (!bTransitionActive && !bWeatherTransitionActive)
 	{
 		SetActorTickEnabled(false);
 		return;
 	}
 
-	TransitionElapsed += DeltaSeconds;
-	const float Alpha = TransitionDuration <= KINDA_SMALL_NUMBER
-		? 1.0f
-		: FMath::Clamp(TransitionElapsed / TransitionDuration, 0.0f, 1.0f);
-	const float SmoothAlpha = FMath::SmoothStep(0.0f, 1.0f, Alpha);
-	WriteNumericUDSProperty(TEXT("Time of Day"), NormalizeUDSTime(
-		TransitionStart + TransitionForwardDistance * SmoothAlpha));
-	for (const TPair<FName, double>& TargetParameter : TransitionTargetParameters)
+	if (bTransitionActive)
 	{
-		if (const double* StartValue = TransitionStartParameters.Find(TargetParameter.Key))
+		TransitionElapsed += DeltaSeconds;
+		const float Alpha = TransitionDuration <= KINDA_SMALL_NUMBER
+			? 1.0f
+			: FMath::Clamp(TransitionElapsed / TransitionDuration, 0.0f, 1.0f);
+		const float SmoothAlpha = FMath::SmoothStep(0.0f, 1.0f, Alpha);
+		WriteNumericUDSProperty(TEXT("Time of Day"), NormalizeUDSTime(
+			TransitionStart + TransitionForwardDistance * SmoothAlpha));
+		if (Alpha >= 1.0f)
 		{
-			WriteNumericUDSProperty(
-				TargetParameter.Key,
-				FMath::Lerp(*StartValue, TargetParameter.Value, static_cast<double>(SmoothAlpha)));
-		}
-	}
-	for (const TPair<FName, FLinearColor>& TargetColor : TransitionTargetColors)
-	{
-		if (const FLinearColor* StartColor = TransitionStartColors.Find(TargetColor.Key))
-		{
-			if (FStructProperty* ColorProperty = CastField<FStructProperty>(FindUDSProperty(TargetColor.Key)))
-			{
-				FLinearColor* Value = ColorProperty->ContainerPtrToValuePtr<FLinearColor>(UltraDynamicSky);
-				*Value = FMath::Lerp(*StartColor, TargetColor.Value, SmoothAlpha);
-			}
+			WriteNumericUDSProperty(TEXT("Time of Day"), TransitionTarget);
+			bTransitionActive = false;
 		}
 	}
 
-	if (Alpha >= 1.0f)
+	if (bWeatherTransitionActive)
 	{
-		WriteNumericUDSProperty(TEXT("Time of Day"), TransitionTarget);
-		for (const TPair<FName, double>& TargetParameter : TransitionTargetParameters)
+		WeatherTransitionElapsed += DeltaSeconds;
+		const float Alpha = WeatherTransitionDuration <= KINDA_SMALL_NUMBER
+			? 1.0f
+			: FMath::Clamp(WeatherTransitionElapsed / WeatherTransitionDuration, 0.0f, 1.0f);
+		const float SmoothAlpha = FMath::SmoothStep(0.0f, 1.0f, Alpha);
+		const double CloudCoverage = FMath::Lerp(
+			WeatherStartCloudCoverage, WeatherTargetCloudCoverage, SmoothAlpha);
+		const double Fog = FMath::Lerp(WeatherStartFog, WeatherTargetFog, SmoothAlpha);
+		WriteNumericUDSProperty(TEXT("Cloud Coverage"), CloudCoverage);
+		WriteNumericUDSProperty(TEXT("Weather Cloud Coverage"), CloudCoverage);
+		WriteNumericUDSProperty(TEXT("Fog"), Fog);
+		WriteNumericUDSProperty(TEXT("Weather Fog"), Fog);
+		if (Alpha >= 1.0f)
 		{
-			WriteNumericUDSProperty(TargetParameter.Key, TargetParameter.Value);
+			bWeatherTransitionActive = false;
 		}
-		ApplyDiscreteSnapshotValues(GetProfile(CurrentTimeState));
-		bTransitionActive = false;
+	}
+
+	if (!bTransitionActive && !bWeatherTransitionActive)
+	{
 		SetActorTickEnabled(false);
 	}
 }
@@ -150,66 +177,15 @@ void AHouseTimeController::SetTimeState(const EHouseTimeState NewState, const bo
 	{
 		TransitionForwardDistance += UDSDayLength;
 	}
-	TransitionStartParameters.Reset();
-	TransitionTargetParameters.Reset();
-	TransitionStartColors.Reset();
-	TransitionTargetColors.Reset();
-	const FProperty* TimeOfDayProperty = FindUDSProperty(TEXT("Time of Day"));
-	const FName TimeOfDayPropertyName = TimeOfDayProperty
-		? TimeOfDayProperty->GetFName()
-		: NAME_None;
-	for (const FHouseCapturedUDSProperty& Captured : TargetProfile.Snapshot)
-	{
-		FProperty* Property = FindUDSProperty(Captured.PropertyName);
-		FNumericProperty* NumericProperty = CastField<FNumericProperty>(Property);
-		if (FStructProperty* StructProperty = CastField<FStructProperty>(Property))
-		{
-			if (StructProperty->Struct == TBaseStructure<FLinearColor>::Get())
-			{
-				FLinearColor TargetColor;
-				if (TargetColor.InitFromString(Captured.ExportedValue))
-				{
-					const FLinearColor* CurrentColor =
-						StructProperty->ContainerPtrToValuePtr<FLinearColor>(UltraDynamicSky);
-					TransitionStartColors.Add(Captured.PropertyName, *CurrentColor);
-					TransitionTargetColors.Add(Captured.PropertyName, TargetColor);
-				}
-			}
-			continue;
-		}
-		if (!NumericProperty || Captured.PropertyName == TimeOfDayPropertyName)
-		{
-			continue;
-		}
-
-		double CurrentValue = 0.0;
-		if (ReadNumericUDSProperty(Captured.PropertyName, CurrentValue))
-		{
-			TransitionStartParameters.Add(Captured.PropertyName, CurrentValue);
-			TransitionTargetParameters.Add(
-				Captured.PropertyName, FCString::Atod(*Captured.ExportedValue));
-		}
-	}
-
 	if (bInstant || TransitionDuration <= KINDA_SMALL_NUMBER ||
 		TransitionForwardDistance <= KINDA_SMALL_NUMBER)
 	{
 		bTransitionActive = false;
-		SetActorTickEnabled(false);
 		WriteNumericUDSProperty(TEXT("Time of Day"), TransitionTarget);
-		for (const TPair<FName, double>& Parameter : TransitionTargetParameters)
+		if (!bWeatherTransitionActive)
 		{
-			WriteNumericUDSProperty(Parameter.Key, Parameter.Value);
+			SetActorTickEnabled(false);
 		}
-		for (const TPair<FName, FLinearColor>& TargetColor : TransitionTargetColors)
-		{
-			if (FStructProperty* ColorProperty = CastField<FStructProperty>(FindUDSProperty(TargetColor.Key)))
-			{
-				FLinearColor* Value = ColorProperty->ContainerPtrToValuePtr<FLinearColor>(UltraDynamicSky);
-				*Value = TargetColor.Value;
-			}
-		}
-		ApplyDiscreteSnapshotValues(TargetProfile);
 		return;
 	}
 
@@ -218,11 +194,90 @@ void AHouseTimeController::SetTimeState(const EHouseTimeState NewState, const bo
 	SetActorTickEnabled(true);
 }
 
+void AHouseTimeController::SetWeather(const EHouseWeatherPreset NewWeather, const bool bInstant)
+{
+	switch (NewWeather)
+	{
+	case EHouseWeatherPreset::Rain:
+		WeatherTargetCloudCoverage = RainCloudCoverage;
+		WeatherTargetFog = RainFog;
+		SetRainEnabled(true);
+		break;
+	case EHouseWeatherPreset::Fog:
+		WeatherTargetCloudCoverage = FogCloudCoverage;
+		WeatherTargetFog = FoggyFog;
+		SetRainEnabled(false);
+		break;
+	default:
+		WeatherTargetCloudCoverage = SunnyCloudCoverage;
+		WeatherTargetFog = SunnyFog;
+		SetRainEnabled(false);
+		break;
+	}
+
+	double CurrentCloudCoverage = WeatherTargetCloudCoverage;
+	double CurrentFog = WeatherTargetFog;
+	ReadNumericUDSProperty(TEXT("Cloud Coverage"), CurrentCloudCoverage);
+	ReadNumericUDSProperty(TEXT("Fog"), CurrentFog);
+	WeatherStartCloudCoverage = static_cast<float>(CurrentCloudCoverage);
+	WeatherStartFog = static_cast<float>(CurrentFog);
+
+	if (bInstant || WeatherTransitionDuration <= KINDA_SMALL_NUMBER)
+	{
+		bWeatherTransitionActive = false;
+		WriteNumericUDSProperty(TEXT("Cloud Coverage"), WeatherTargetCloudCoverage);
+		WriteNumericUDSProperty(TEXT("Weather Cloud Coverage"), WeatherTargetCloudCoverage);
+		WriteNumericUDSProperty(TEXT("Fog"), WeatherTargetFog);
+		WriteNumericUDSProperty(TEXT("Weather Fog"), WeatherTargetFog);
+		if (!bTransitionActive)
+		{
+			SetActorTickEnabled(false);
+		}
+		return;
+	}
+
+	WeatherTransitionElapsed = 0.0f;
+	bWeatherTransitionActive = true;
+	SetActorTickEnabled(true);
+}
+
+void AHouseTimeController::SetRainEnabled(const bool bEnabled) const
+{
+	for (AActor* RainActor : RainActors)
+	{
+		if (!IsValid(RainActor))
+		{
+			continue;
+		}
+		RainActor->SetActorHiddenInGame(!bEnabled);
+		RainActor->SetActorEnableCollision(false);
+		TInlineComponentArray<UActorComponent*> Components(RainActor);
+		for (UActorComponent* Component : Components)
+		{
+			if (bEnabled)
+			{
+				Component->Activate(true);
+			}
+			else
+			{
+				Component->Deactivate();
+			}
+		}
+	}
+}
+
 void AHouseTimeController::HandleExperienceTimeChanged(
 	const EHouseTimePreset PreviousTime,
 	const EHouseTimePreset NewTime)
 {
 	SetTimeState(MapExperienceTime(NewTime));
+}
+
+void AHouseTimeController::HandleExperienceWeatherChanged(
+	const EHouseWeatherPreset PreviousWeather,
+	const EHouseWeatherPreset NewWeather)
+{
+	SetWeather(NewWeather);
 }
 
 FHouseTimeProfile& AHouseTimeController::GetProfile(const EHouseTimeState State)

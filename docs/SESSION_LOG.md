@@ -466,3 +466,16 @@ Keep entries short. This is a chronological index; the current truth belongs in
 - Verified exactly one saved arrival point for each destination and built
   `HouseOfAtonalEditor Win64 Development` successfully.
 - Next: validate pointing, teleport position and HMD room-scale offset in VR.
+
+## 2026-08-27 — [FORGE] Smooth authored time states and View weather
+
+- Rewired the three time icons directly to saved controller states at 1152,
+  1747.2 and 0 instead of routing them through mismatched experience presets.
+- Removed per-frame interpolation of 599 reflected UDS snapshot properties;
+  runtime time transitions now update only Time of Day.
+- Changed weather options to Sunny, Rain and Fog, added smooth UDS cloud/fog
+  transitions, and connected both placed EasyRain actors to the Rain state.
+- Built `HouseOfAtonalEditor Win64 Development` and verified the saved map still
+  contains all three authored times and both configured rain references.
+- Next: review transitions and rain coverage in VR, then tune the exposed
+  weather values on `TIME_HouseTimeController` if needed.

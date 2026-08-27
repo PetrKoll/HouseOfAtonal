@@ -19,6 +19,7 @@
 #include "UI/HouseFilledCircleWidget.h"
 #include "UI/HouseControlMenuComponent.h"
 #include "World/HouseViewArrivalPoint.h"
+#include "World/HouseTimeController.h"
 
 void UHouseRadialMenuV1::NativeOnInitialized()
 {
@@ -97,8 +98,8 @@ void UHouseRadialMenuV1::BuildMenu()
 		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_armchair.T_Lucide_armchair"),
 		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_bed_double.T_Lucide_bed_double"),
 		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_sun.T_Lucide_sun"),
-		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_cloud.T_Lucide_cloud"),
 		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_cloud_rain.T_Lucide_cloud_rain"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_cloud.T_Lucide_cloud"),
 		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_sunrise.T_Lucide_sunrise"),
 		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_sun.T_Lucide_sun"),
 		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_moon.T_Lucide_moon")};
@@ -306,17 +307,21 @@ void UHouseRadialMenuV1::SelectOption(const int32 FlatIndex)
 	{
 		static constexpr EHouseWeatherPreset Values[] = {
 			EHouseWeatherPreset::Clear,
-			EHouseWeatherPreset::Cloudy,
-			EHouseWeatherPreset::Rain};
+			EHouseWeatherPreset::Rain,
+			EHouseWeatherPreset::Fog};
 		Experience->SetWeather(Values[OptionIndex]);
 	}
 	else if (GroupIndex == 2)
 	{
-		static constexpr EHouseTimePreset Values[] = {
-			EHouseTimePreset::Morning,
-			EHouseTimePreset::Noon,
-			EHouseTimePreset::Night};
-		Experience->SetTimeOfDay(Values[OptionIndex]);
+		for (TActorIterator<AHouseTimeController> It(GetWorld()); It; ++It)
+		{
+			static constexpr EHouseTimeState States[] = {
+				EHouseTimeState::State01,
+				EHouseTimeState::State02,
+				EHouseTimeState::State03};
+			It->SetTimeState(States[OptionIndex]);
+			break;
+		}
 	}
 }
 

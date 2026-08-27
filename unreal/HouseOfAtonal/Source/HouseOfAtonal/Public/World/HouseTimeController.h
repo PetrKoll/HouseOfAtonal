@@ -76,6 +76,32 @@ public:
 		meta = (ClampMin = "0.0", UIMin = "0.0", UIMax = "30.0", Units = "s"))
 	float TransitionDuration = 5.0f;
 
+	/** Existing rain Blueprint actors. They stay inactive for sunny and foggy weather. */
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Weather Controller")
+	TArray<TObjectPtr<AActor>> RainActors;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
+	float SunnyCloudCoverage = 3.8f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
+	float RainCloudCoverage = 7.5f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
+	float FogCloudCoverage = 6.5f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
+	float SunnyFog = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
+	float RainFog = 2.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
+	float FoggyFog = 8.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Transition",
+		meta = (ClampMin = "0.0", UIMin = "0.0", UIMax = "30.0", Units = "s"))
+	float WeatherTransitionDuration = 4.0f;
+
 	/** Copies the current UDS Time of Day into the selected state. */
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Time Controller|Authoring")
 	void CaptureCurrentUDSTime();
@@ -88,6 +114,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Time Controller")
 	void SetTimeState(EHouseTimeState NewState, bool bInstant = false);
 
+	UFUNCTION(BlueprintCallable, Category = "Weather Controller")
+	void SetWeather(EHouseWeatherPreset NewWeather, bool bInstant = false);
+
 	UFUNCTION(BlueprintPure, Category = "Time Controller")
 	EHouseTimeState GetCurrentTimeState() const { return CurrentTimeState; }
 
@@ -99,6 +128,9 @@ private:
 	UFUNCTION()
 	void HandleExperienceTimeChanged(EHouseTimePreset PreviousTime, EHouseTimePreset NewTime);
 
+	UFUNCTION()
+	void HandleExperienceWeatherChanged(EHouseWeatherPreset PreviousWeather, EHouseWeatherPreset NewWeather);
+
 	FHouseTimeProfile& GetProfile(EHouseTimeState State);
 	const FHouseTimeProfile& GetProfile(EHouseTimeState State) const;
 	void CaptureUDSSnapshot(FHouseTimeProfile& Profile) const;
@@ -109,14 +141,18 @@ private:
 	bool IsCapturableUDSProperty(const FProperty* Property) const;
 	static float NormalizeUDSTime(float Time);
 	static EHouseTimeState MapExperienceTime(EHouseTimePreset TimePreset);
+	void ResolveRainActors();
+	void SetRainEnabled(bool bEnabled) const;
 
 	bool bTransitionActive = false;
 	float TransitionElapsed = 0.0f;
 	float TransitionStart = 0.0f;
 	float TransitionForwardDistance = 0.0f;
 	float TransitionTarget = 0.0f;
-	TMap<FName, double> TransitionStartParameters;
-	TMap<FName, double> TransitionTargetParameters;
-	TMap<FName, FLinearColor> TransitionStartColors;
-	TMap<FName, FLinearColor> TransitionTargetColors;
+	bool bWeatherTransitionActive = false;
+	float WeatherTransitionElapsed = 0.0f;
+	float WeatherStartCloudCoverage = 0.0f;
+	float WeatherTargetCloudCoverage = 0.0f;
+	float WeatherStartFog = 0.0f;
+	float WeatherTargetFog = 0.0f;
 };
