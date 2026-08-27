@@ -99,6 +99,8 @@ visual review in Unreal.
   preview/runtime states. The `map_geometry` actor is automatically Map-only.
 - Replaced the locked View Level Control Menu number labels with Lucide icons
   while preserving its approved circle geometry, hover, pinning and motion.
+- Increased Control Menu icon stroke weight for VR legibility and connected
+  its destination options to the three authored View Level arrival points.
 
 ## In progress
 

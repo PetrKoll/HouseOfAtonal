@@ -108,6 +108,8 @@ private:
 	void PinMain(int32 Index);
 	void SetOptionHovered(int32 Index);
 	void ClearOptionHovered(int32 Index);
+	void SelectOption(int32 FlatIndex);
+	void TeleportToDestination(int32 OptionIndex);
 	void RefreshOptionVisibility();
 	void UpdateOptionAnimation(float DeltaTime);
 	const TArray<FVector2D>& GetOptionOffsetsForMain(int32 MainIndex) const;
@@ -127,6 +129,15 @@ private:
 	UFUNCTION() void UnhoverOption0();
 	UFUNCTION() void UnhoverOption1();
 	UFUNCTION() void UnhoverOption2();
+	UFUNCTION() void ClickOption0();
+	UFUNCTION() void ClickOption1();
+	UFUNCTION() void ClickOption2();
+	UFUNCTION() void ClickOption3();
+	UFUNCTION() void ClickOption4();
+	UFUNCTION() void ClickOption5();
+	UFUNCTION() void ClickOption6();
+	UFUNCTION() void ClickOption7();
+	UFUNCTION() void ClickOption8();
 
 	UPROPERTY(Transient)
 	TObjectPtr<UCanvasPanel> RootCanvas;

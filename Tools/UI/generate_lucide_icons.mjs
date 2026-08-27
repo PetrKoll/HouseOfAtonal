@@ -21,7 +21,7 @@ for (const name of icons) {
   if (!response.ok) throw new Error(`${response.status} ${url}`);
   const svg = (await response.text())
     .replace(/stroke="currentColor"/g, 'stroke="#111111"')
-    .replace(/stroke-width="2"/g, 'stroke-width="1.8"');
+    .replace(/stroke-width="2"/g, 'stroke-width="3.2"');
   await fs.writeFile(path.join(output, `${name}.svg`), svg);
   await sharp(Buffer.from(svg))
     .resize(256, 256)

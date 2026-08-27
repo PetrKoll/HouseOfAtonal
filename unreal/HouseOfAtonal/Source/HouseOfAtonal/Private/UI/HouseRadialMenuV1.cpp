@@ -9,9 +9,16 @@
 #include "Components/Overlay.h"
 #include "Components/OverlaySlot.h"
 #include "Components/SizeBox.h"
+#include "Engine/GameInstance.h"
 #include "Engine/Texture2D.h"
+#include "EngineUtils.h"
+#include "Experience/HouseExperienceSubsystem.h"
+#include "GameFramework/Pawn.h"
+#include "Kismet/GameplayStatics.h"
 #include "Styling/SlateBrush.h"
 #include "UI/HouseFilledCircleWidget.h"
+#include "UI/HouseControlMenuComponent.h"
+#include "World/HouseViewArrivalPoint.h"
 
 void UHouseRadialMenuV1::NativeOnInitialized()
 {
@@ -156,6 +163,15 @@ void UHouseRadialMenuV1::BuildMenu()
 	MainButtons[0]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickMain0);
 	MainButtons[1]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickMain1);
 	MainButtons[2]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickMain2);
+	OptionButtons[0]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption0);
+	OptionButtons[1]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption1);
+	OptionButtons[2]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption2);
+	OptionButtons[3]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption3);
+	OptionButtons[4]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption4);
+	OptionButtons[5]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption5);
+	OptionButtons[6]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption6);
+	OptionButtons[7]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption7);
+	OptionButtons[8]->OnClicked.AddUniqueDynamic(this, &UHouseRadialMenuV1::ClickOption8);
 
 }
 
@@ -259,6 +275,100 @@ void UHouseRadialMenuV1::ClearOptionHovered(int32 Index)
 	if (HoveredOption == Index)
 	{
 		HoveredOption = INDEX_NONE;
+	}
+}
+
+void UHouseRadialMenuV1::SelectOption(const int32 FlatIndex)
+{
+	if (FlatIndex < 0 || FlatIndex >= 9)
+	{
+		return;
+	}
+
+	const int32 GroupIndex = FlatIndex / 3;
+	const int32 OptionIndex = FlatIndex % 3;
+	if (GroupIndex == 0)
+	{
+		TeleportToDestination(OptionIndex);
+		return;
+	}
+
+	UGameInstance* GameInstance = GetGameInstance();
+	UHouseExperienceSubsystem* Experience = GameInstance
+		? GameInstance->GetSubsystem<UHouseExperienceSubsystem>()
+		: nullptr;
+	if (!Experience)
+	{
+		return;
+	}
+
+	if (GroupIndex == 1)
+	{
+		static constexpr EHouseWeatherPreset Values[] = {
+			EHouseWeatherPreset::Clear,
+			EHouseWeatherPreset::Cloudy,
+			EHouseWeatherPreset::Rain};
+		Experience->SetWeather(Values[OptionIndex]);
+	}
+	else if (GroupIndex == 2)
+	{
+		static constexpr EHouseTimePreset Values[] = {
+			EHouseTimePreset::Morning,
+			EHouseTimePreset::Noon,
+			EHouseTimePreset::Night};
+		Experience->SetTimeOfDay(Values[OptionIndex]);
+	}
+}
+
+void UHouseRadialMenuV1::TeleportToDestination(const int32 OptionIndex)
+{
+	static constexpr EHouseLocation Destinations[] = {
+		EHouseLocation::Atrium,
+		EHouseLocation::RoomOne,
+		EHouseLocation::RoomTwo};
+	if (OptionIndex < 0 || OptionIndex >= UE_ARRAY_COUNT(Destinations) || !GetWorld())
+	{
+		return;
+	}
+
+	AHouseViewArrivalPoint* Arrival = nullptr;
+	for (TActorIterator<AHouseViewArrivalPoint> It(GetWorld()); It; ++It)
+	{
+		if (It->Destination == Destinations[OptionIndex])
+		{
+			Arrival = *It;
+			break;
+		}
+	}
+
+	APawn* Pawn = UGameplayStatics::GetPlayerPawn(this, 0);
+	if (!Arrival || !Pawn)
+	{
+		UE_LOG(LogTemp, Warning,
+			TEXT("Control Menu could not find pawn or arrival for destination %d"),
+			OptionIndex);
+		return;
+	}
+
+	if (UGameInstance* GameInstance = GetGameInstance())
+	{
+		if (UHouseExperienceSubsystem* Experience =
+			GameInstance->GetSubsystem<UHouseExperienceSubsystem>())
+		{
+			Experience->SetLocation(Destinations[OptionIndex]);
+		}
+	}
+
+	Pawn->TeleportTo(
+		Arrival->GetActorLocation(),
+		Arrival->GetActorRotation(),
+		false,
+		true);
+
+	if (UHouseControlMenuComponent* ControlMenu =
+		Pawn->FindComponentByClass<UHouseControlMenuComponent>())
+	{
+		ControlMenu->HideControlMenu();
 	}
 }
 
@@ -388,3 +498,12 @@ void UHouseRadialMenuV1::HoverOption2() { SetOptionHovered(2); }
 void UHouseRadialMenuV1::UnhoverOption0() { ClearOptionHovered(0); }
 void UHouseRadialMenuV1::UnhoverOption1() { ClearOptionHovered(1); }
 void UHouseRadialMenuV1::UnhoverOption2() { ClearOptionHovered(2); }
+void UHouseRadialMenuV1::ClickOption0() { SelectOption(0); }
+void UHouseRadialMenuV1::ClickOption1() { SelectOption(1); }
+void UHouseRadialMenuV1::ClickOption2() { SelectOption(2); }
+void UHouseRadialMenuV1::ClickOption3() { SelectOption(3); }
+void UHouseRadialMenuV1::ClickOption4() { SelectOption(4); }
+void UHouseRadialMenuV1::ClickOption5() { SelectOption(5); }
+void UHouseRadialMenuV1::ClickOption6() { SelectOption(6); }
+void UHouseRadialMenuV1::ClickOption7() { SelectOption(7); }
+void UHouseRadialMenuV1::ClickOption8() { SelectOption(8); }

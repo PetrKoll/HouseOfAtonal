@@ -456,3 +456,13 @@ Keep entries short. This is a chronological index; the current truth belongs in
   and imported the 256 px transparent assets as non-streaming UI textures.
 - Built `HouseOfAtonalEditor Win64 Development` successfully.
 - Next: visually validate icon size and semantic choices in the headset.
+
+## 2026-08-27 — [FORGE] Control Menu teleport and stronger icons
+
+- Increased generated Lucide stroke width from 1.8 to 3.2 for VR legibility.
+- Connected all nine radial option buttons to their destination, weather and
+  time selections. Destination choices now teleport the current pawn to the
+  authored Atrium, Room 1 and Room 2 arrival points and close the menu.
+- Verified exactly one saved arrival point for each destination and built
+  `HouseOfAtonalEditor Win64 Development` successfully.
+- Next: validate pointing, teleport position and HMD room-scale offset in VR.
