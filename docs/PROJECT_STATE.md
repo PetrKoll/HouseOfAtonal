@@ -107,6 +107,10 @@ visual review in Unreal.
 - Defined the View Level weather choices as Sunny, Rain and Fog. Rain and fog
   smoothly increase UDS cloud coverage, fog also increases the UDS fog value,
   and the two authored EasyRain actors are activated only for Rain.
+- Rain and Fog now have separate morning, afternoon and night UDS cloud/fog
+  targets, preserving readable time-of-day differences in every weather mode.
+  The two local EasyRain emitters were raised to the demo-authored height so
+  airborne streaks can render in addition to ground splashes.
 
 ## In progress
 

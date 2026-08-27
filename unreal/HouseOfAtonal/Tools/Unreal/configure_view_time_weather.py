@@ -20,6 +20,14 @@ if not rain_actors:
 
 controller.set_editor_property("rain_actors", rain_actors)
 controller.modify()
+for rain_actor in rain_actors:
+    location = rain_actor.get_actor_location()
+    rain_actor.set_actor_location(
+        unreal.Vector(location.x, location.y, 300.0),
+        False,
+        False,
+    )
+    rain_actor.modify()
 unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True)
 unreal.log(
     "HOUSE_WEATHER_CONFIG controller={} rain_actors={}".format(

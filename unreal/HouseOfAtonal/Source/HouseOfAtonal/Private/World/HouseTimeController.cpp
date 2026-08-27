@@ -186,26 +186,37 @@ void AHouseTimeController::SetTimeState(const EHouseTimeState NewState, const bo
 		{
 			SetActorTickEnabled(false);
 		}
+		if (CurrentWeather == EHouseWeatherPreset::Rain ||
+			CurrentWeather == EHouseWeatherPreset::Fog)
+		{
+			SetWeather(CurrentWeather, bInstant);
+		}
 		return;
 	}
 
 	TransitionElapsed = 0.0f;
 	bTransitionActive = true;
 	SetActorTickEnabled(true);
+	if (CurrentWeather == EHouseWeatherPreset::Rain ||
+		CurrentWeather == EHouseWeatherPreset::Fog)
+	{
+		SetWeather(CurrentWeather);
+	}
 }
 
 void AHouseTimeController::SetWeather(const EHouseWeatherPreset NewWeather, const bool bInstant)
 {
+	CurrentWeather = NewWeather;
 	switch (NewWeather)
 	{
 	case EHouseWeatherPreset::Rain:
-		WeatherTargetCloudCoverage = RainCloudCoverage;
-		WeatherTargetFog = RainFog;
+		WeatherTargetCloudCoverage = GetRainCloudCoverage();
+		WeatherTargetFog = GetRainFog();
 		SetRainEnabled(true);
 		break;
 	case EHouseWeatherPreset::Fog:
-		WeatherTargetCloudCoverage = FogCloudCoverage;
-		WeatherTargetFog = FoggyFog;
+		WeatherTargetCloudCoverage = GetFogCloudCoverage();
+		WeatherTargetFog = GetFogAmount();
 		SetRainEnabled(false);
 		break;
 	default:
@@ -239,6 +250,58 @@ void AHouseTimeController::SetWeather(const EHouseWeatherPreset NewWeather, cons
 	WeatherTransitionElapsed = 0.0f;
 	bWeatherTransitionActive = true;
 	SetActorTickEnabled(true);
+}
+
+float AHouseTimeController::GetRainCloudCoverage() const
+{
+	switch (CurrentTimeState)
+	{
+	case EHouseTimeState::State02:
+		return AfternoonRainCloudCoverage;
+	case EHouseTimeState::State03:
+		return NightRainCloudCoverage;
+	default:
+		return MorningRainCloudCoverage;
+	}
+}
+
+float AHouseTimeController::GetRainFog() const
+{
+	switch (CurrentTimeState)
+	{
+	case EHouseTimeState::State02:
+		return AfternoonRainFog;
+	case EHouseTimeState::State03:
+		return NightRainFog;
+	default:
+		return MorningRainFog;
+	}
+}
+
+float AHouseTimeController::GetFogCloudCoverage() const
+{
+	switch (CurrentTimeState)
+	{
+	case EHouseTimeState::State02:
+		return AfternoonFogCloudCoverage;
+	case EHouseTimeState::State03:
+		return NightFogCloudCoverage;
+	default:
+		return MorningFogCloudCoverage;
+	}
+}
+
+float AHouseTimeController::GetFogAmount() const
+{
+	switch (CurrentTimeState)
+	{
+	case EHouseTimeState::State02:
+		return AfternoonFog;
+	case EHouseTimeState::State03:
+		return NightFog;
+	default:
+		return MorningFog;
+	}
 }
 
 void AHouseTimeController::SetRainEnabled(const bool bEnabled) const

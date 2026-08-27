@@ -479,3 +479,15 @@ Keep entries short. This is a chronological index; the current truth belongs in
   contains all three authored times and both configured rain references.
 - Next: review transitions and rain coverage in VR, then tune the exposed
   weather values on `TIME_HouseTimeController` if needed.
+
+## 2026-08-27 — [FORGE] Time-aware rain and fog
+
+- Split Rain and Fog into editable morning, afternoon and night UDS cloud/fog
+  targets; changing time while either weather state is active now transitions
+  both atmosphere values to the matching state.
+- Compared EasyRain against both vendor demo maps and found identical Niagara
+  assets/settings but much lower placement in `L_ViewLevel`. Raised both local
+  emitters to Z 300, matching the demo range, to restore airborne rain streaks.
+- Built `HouseOfAtonalEditor Win64 Development` successfully.
+- Next: validate airborne drops, rain visibility and all nine time/weather
+  combinations in the headset, then tune the exposed controller values.

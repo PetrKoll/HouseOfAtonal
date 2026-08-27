@@ -392,4 +392,6 @@ the previous one.
   house also avoids a visibly player-following emitter.
 - Consequence: Full UDS snapshots remain useful for editor capture/preview but
   are not replayed during runtime time changes. Weather values stay editable on
-  the placed controller for visual tuning.
+  the placed controller for visual tuning. Rain and Fog use distinct morning,
+  afternoon and night cloud/fog targets rather than flattening the three
+  authored time states into one weather appearance.

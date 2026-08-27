@@ -84,19 +84,43 @@ public:
 	float SunnyCloudCoverage = 3.8f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
-	float RainCloudCoverage = 7.5f;
+	float MorningRainCloudCoverage = 8.5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
-	float FogCloudCoverage = 6.5f;
+	float AfternoonRainCloudCoverage = 7.5f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
+	float NightRainCloudCoverage = 9.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
+	float MorningFogCloudCoverage = 7.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
+	float AfternoonFogCloudCoverage = 5.5f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Cloud Coverage")
+	float NightFogCloudCoverage = 7.5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
 	float SunnyFog = 1.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
-	float RainFog = 2.0f;
+	float MorningRainFog = 3.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
-	float FoggyFog = 8.0f;
+	float AfternoonRainFog = 2.25f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
+	float NightRainFog = 3.5f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
+	float MorningFog = 8.5f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
+	float AfternoonFog = 5.5f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Fog")
+	float NightFog = 7.5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weather Controller|Transition",
 		meta = (ClampMin = "0.0", UIMin = "0.0", UIMax = "30.0", Units = "s"))
@@ -141,6 +165,10 @@ private:
 	bool IsCapturableUDSProperty(const FProperty* Property) const;
 	static float NormalizeUDSTime(float Time);
 	static EHouseTimeState MapExperienceTime(EHouseTimePreset TimePreset);
+	float GetRainCloudCoverage() const;
+	float GetRainFog() const;
+	float GetFogCloudCoverage() const;
+	float GetFogAmount() const;
 	void ResolveRainActors();
 	void SetRainEnabled(bool bEnabled) const;
 
@@ -155,4 +183,5 @@ private:
 	float WeatherTargetCloudCoverage = 0.0f;
 	float WeatherStartFog = 0.0f;
 	float WeatherTargetFog = 0.0f;
+	EHouseWeatherPreset CurrentWeather = EHouseWeatherPreset::Clear;
 };
