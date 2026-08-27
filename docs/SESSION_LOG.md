@@ -502,3 +502,14 @@ Keep entries short. This is a chronological index; the current truth belongs in
   actor references into `L_ViewLevel`.
 - Next: verify the three practical-light compositions and chandelier emissive
   transition in PIE/headset.
+
+## 2026-08-27 — [FORGE] Persistent PCVR shadow-noise fix
+
+- Diagnosed moving bright/dark shadow speckles as a combination of Virtual
+  Shadow Map instability and Lumen GI temporal noise.
+- Persisted the successful headset test: Virtual Shadow Maps disabled and
+  `r.Lumen.ScreenProbeGather.Temporal.MaxFramesAccumulated=32`.
+- Kept Lumen diffuse indirect enabled; disabling it removed essential bounce
+  lighting and produced an unacceptable flat image.
+- Next: restart Unreal, confirm the settings load automatically and check for
+  temporal trails during fast head movement and time-of-day transitions.

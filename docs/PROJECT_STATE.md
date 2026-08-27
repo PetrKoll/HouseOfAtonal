@@ -114,6 +114,9 @@ visual review in Unreal.
 - The `time_01`, `time_02` and `time_03` View Level light folders are bound to
   their matching time states so only one authored light group is visible. The
   chandelier `MI_light_bulb_A` Intensity is 0 for states 01/02 and 1000 at night.
+- PCVR shadow stability now uses conventional dynamic shadows and 32-frame
+  Lumen Screen Probe Gather accumulation, matching the user's successful
+  in-headset noise test.
 
 ## In progress
 

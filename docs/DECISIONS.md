@@ -330,7 +330,7 @@ the previous one.
 - Status: accepted
 - Decision: Drive local FogArea volumes with one nearly invisible global
   Exponential Height Fog and allocate increased desktop GPU quality to
-  volumetric resolution and Virtual Shadow Maps.
+  volumetric resolution and temporally stable dynamic shadows.
 - Reason: Quest is only the display target, the Menu Level has little runtime
   activity, and visual atmosphere is the current priority.
 - Consequence: FogArea remains locally art-directable in the level, while the
@@ -342,13 +342,28 @@ the previous one.
 - Author: [FORGE]
 - Status: accepted
 - Decision: Use Desktop Deferred Rendering, TSR, Lumen GI, Lumen Reflections,
-  DX12 SM6 and Virtual Shadow Maps for the PC-rendered experience.
+  DX12 SM6 and conventional dynamic shadow maps for the PC-rendered experience.
 - Reason: Forward Shading cannot provide Lumen bounce or reflections, and the
   project's priority is high-end visual depth rather than standalone Quest
   rendering performance.
 - Consequence: Rendering both headset eyes is substantially more expensive and
   must be profiled, but indirect illumination and reflection features are now
   available on their supported rendering path.
+
+## D-032 — Prefer stable Lumen accumulation over Virtual Shadow Maps in PCVR
+
+- Date: 2026-08-27
+- Author: [FORGE]
+- Status: accepted
+- Decision: Disable Virtual Shadow Maps and set Lumen Screen Probe Gather
+  temporal accumulation to 32 frames for the current PCVR presentation.
+- Reason: Headset testing showed moving bright/dark speckles in shadowed
+  surfaces. Conventional shadows reduced one part of the instability and the
+  longer Lumen accumulation removed the remaining distracting GI noise while
+  retaining Lumen's necessary indirect lighting.
+- Consequence: Lighting reacts more slowly to sudden changes and may show some
+  temporal persistence. Shadow quality must be revalidated on all Movable time
+  lights, but the tested image is materially more stable in-headset.
 
 ## D-028 — Author cars individually, render and move them centrally
 
