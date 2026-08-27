@@ -447,3 +447,12 @@ Keep entries short. This is a chronological index; the current truth belongs in
   no missing or duplicate Map View actors and six actors in the Map tag group.
 - Next: populate custom visibility rows only for exceptions; continue using
   folder/tag groups for large batches of related actors.
+
+## 2026-08-27 — [FORGE] Lucide icons for View Level Control Menu
+
+- Replaced the `01–03` and `11–33` labels in `HouseRadialMenuV1` with Lucide
+  category and option icons without changing the locked interaction or motion.
+- Added reproducible Lucide SVG/PNG generation, retained the upstream license,
+  and imported the 256 px transparent assets as non-streaming UI textures.
+- Built `HouseOfAtonalEditor Win64 Development` successfully.
+- Next: visually validate icon size and semantic choices in the headset.

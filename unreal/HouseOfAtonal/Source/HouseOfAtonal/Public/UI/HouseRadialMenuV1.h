@@ -5,8 +5,8 @@
 
 class UButton;
 class UCanvasPanel;
+class UImage;
 class USizeBox;
-class UTextBlock;
 
 /**
  * Minimal radial-menu V1: three main filled circles and three contextual
@@ -99,11 +99,10 @@ private:
 		FName Name,
 		const FVector2D& Position,
 		float Diameter,
-		const FText& Label,
-		int32 FontSize,
+		const TCHAR* IconPath,
+		float IconSize,
 		UButton*& OutButton,
-		USizeBox*& OutVisual,
-		UTextBlock*& OutLabel);
+		USizeBox*& OutVisual);
 	void SetMainHovered(int32 Index);
 	void ClearMainHovered(int32 Index);
 	void PinMain(int32 Index);
@@ -143,9 +142,6 @@ private:
 
 	UPROPERTY(Transient)
 	TArray<TObjectPtr<USizeBox>> OptionVisuals;
-
-	UPROPERTY(Transient)
-	TArray<TObjectPtr<UTextBlock>> OptionLabels;
 
 	int32 HoveredMain = INDEX_NONE;
 	int32 PinnedMain = INDEX_NONE;

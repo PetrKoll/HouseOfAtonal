@@ -5,10 +5,11 @@
 #include "Components/ButtonSlot.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
+#include "Components/Image.h"
 #include "Components/Overlay.h"
 #include "Components/OverlaySlot.h"
 #include "Components/SizeBox.h"
-#include "Components/TextBlock.h"
+#include "Engine/Texture2D.h"
 #include "Styling/SlateBrush.h"
 #include "UI/HouseFilledCircleWidget.h"
 
@@ -79,22 +80,34 @@ void UHouseRadialMenuV1::BuildMenu()
 	MainVisuals.SetNum(3);
 	OptionButtons.SetNum(9);
 	OptionVisuals.SetNum(9);
-	OptionLabels.SetNum(9);
+
+	static const TCHAR* MainIcons[] = {
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_map_pin.T_Lucide_map_pin"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_cloud_sun.T_Lucide_cloud_sun"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_clock_3.T_Lucide_clock_3")};
+	static const TCHAR* OptionIcons[] = {
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_trees.T_Lucide_trees"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_armchair.T_Lucide_armchair"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_bed_double.T_Lucide_bed_double"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_sun.T_Lucide_sun"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_cloud.T_Lucide_cloud"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_cloud_rain.T_Lucide_cloud_rain"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_sunrise.T_Lucide_sunrise"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_sun.T_Lucide_sun"),
+		TEXT("/Game/HouseOfAtonal/UI/Icons/Lucide/T_Lucide_moon.T_Lucide_moon")};
 
 	for (int32 Index = 0; Index < 3; ++Index)
 	{
 		UButton* MainButton = nullptr;
 		USizeBox* MainVisual = nullptr;
-		UTextBlock* MainLabel = nullptr;
 		CreateCircleButton(
 			*FString::Printf(TEXT("MainCircle%d"), Index),
 			MainPositions[Index],
 			MainDiameter,
-			FText::FromString(FString::Printf(TEXT("%02d"), Index + 1)),
-			MainFontSize,
+			MainIcons[Index],
+			MainFontSize * 1.75f,
 			MainButton,
-			MainVisual,
-			MainLabel);
+			MainVisual);
 		MainButtons[Index] = MainButton;
 		MainVisuals[Index] = MainVisual;
 		if (UCanvasPanelSlot* MainSlot =
@@ -112,7 +125,6 @@ void UHouseRadialMenuV1::BuildMenu()
 			const int32 FlatIndex = GroupIndex * 3 + OptionIndex;
 			UButton* OptionButton = nullptr;
 			USizeBox* OptionVisual = nullptr;
-			UTextBlock* OptionLabel = nullptr;
 			CreateCircleButton(
 				*FString::Printf(
 					TEXT("OptionCircle%d%d"),
@@ -120,17 +132,12 @@ void UHouseRadialMenuV1::BuildMenu()
 					OptionIndex + 1),
 				MainPositions[GroupIndex],
 				OptionDiameter,
-				FText::FromString(FString::Printf(
-					TEXT("%d%d"),
-					GroupIndex + 1,
-					OptionIndex + 1)),
-				OptionFontSize,
+				OptionIcons[FlatIndex],
+				OptionFontSize * 1.75f,
 				OptionButton,
-				OptionVisual,
-				OptionLabel);
+				OptionVisual);
 			OptionButtons[FlatIndex] = OptionButton;
 			OptionVisuals[FlatIndex] = OptionVisual;
-			OptionLabels[FlatIndex] = OptionLabel;
 			if (UCanvasPanelSlot* OptionSlot =
 				Cast<UCanvasPanelSlot>(OptionButton->Slot))
 			{
@@ -156,11 +163,10 @@ void UHouseRadialMenuV1::CreateCircleButton(
 	FName Name,
 	const FVector2D& Position,
 	float Diameter,
-	const FText& Label,
-	int32 FontSize,
+	const TCHAR* IconPath,
+	float IconSize,
 	UButton*& OutButton,
-	USizeBox*& OutVisual,
-	UTextBlock*& OutLabel)
+	USizeBox*& OutVisual)
 {
 	OutButton = WidgetTree->ConstructWidget<UButton>(
 		UButton::StaticClass(), Name);
@@ -187,17 +193,23 @@ void UHouseRadialMenuV1::CreateCircleButton(
 	CircleSlot->SetHorizontalAlignment(HAlign_Fill);
 	CircleSlot->SetVerticalAlignment(VAlign_Fill);
 
-	OutLabel = WidgetTree->ConstructWidget<UTextBlock>();
-	FSlateFontInfo Font = OutLabel->GetFont();
-	Font.Size = FontSize;
-	OutLabel->SetFont(Font);
-	OutLabel->SetText(Label);
-	OutLabel->SetColorAndOpacity(FSlateColor(TextColor));
-	OutLabel->SetJustification(ETextJustify::Center);
-	OutLabel->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
-	UOverlaySlot* LabelSlot = VisualStack->AddChildToOverlay(OutLabel);
-	LabelSlot->SetHorizontalAlignment(HAlign_Center);
-	LabelSlot->SetVerticalAlignment(VAlign_Center);
+	UTexture2D* IconTexture = LoadObject<UTexture2D>(nullptr, IconPath);
+	if (ensureMsgf(IconTexture, TEXT("Missing Control Menu icon: %s"), IconPath))
+	{
+		UImage* Icon = WidgetTree->ConstructWidget<UImage>();
+		Icon->SetBrushFromTexture(IconTexture, true);
+		Icon->SetColorAndOpacity(TextColor);
+		Icon->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+
+		USizeBox* IconBox = WidgetTree->ConstructWidget<USizeBox>();
+		IconBox->SetWidthOverride(IconSize);
+		IconBox->SetHeightOverride(IconSize);
+		IconBox->AddChild(Icon);
+
+		UOverlaySlot* IconSlot = VisualStack->AddChildToOverlay(IconBox);
+		IconSlot->SetHorizontalAlignment(HAlign_Center);
+		IconSlot->SetVerticalAlignment(VAlign_Center);
+	}
 
 	OutVisual->AddChild(VisualStack);
 	OutButton->AddChild(OutVisual);

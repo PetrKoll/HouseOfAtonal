@@ -1,6 +1,6 @@
 # Project State
 
-Last updated: 2026-08-07
+Last updated: 2026-08-27
 Last updated by: [FORGE]
 
 ## Project
@@ -97,6 +97,8 @@ visual review in Unreal.
 - Added a per-actor visibility-rule table to `MAP_VIEW_CONTROLLER`, allowing
   arbitrary actors to be independently enabled for Neighborhood and Map
   preview/runtime states. The `map_geometry` actor is automatically Map-only.
+- Replaced the locked View Level Control Menu number labels with Lucide icons
+  while preserving its approved circle geometry, hover, pinning and motion.
 
 ## In progress
 
