@@ -513,3 +513,15 @@ Keep entries short. This is a chronological index; the current truth belongs in
   lighting and produced an unacceptable flat image.
 - Next: restart Unreal, confirm the settings load automatically and check for
   temporal trails during fast head movement and time-of-day transitions.
+
+## 2026-08-28 — [FORGE] Architecture and city presentation sync
+
+- Synced the latest `house_b2` and map FBX sources with their updated Unreal
+  architecture, map geometry, materials and Blueprint assets.
+- Saved the current Menu Level and View Level composition and added the new
+  project-owned city, furnishing, texture and material content.
+- Added the PC device profile and repeatable texture/actor audit helpers used
+  for the current VR performance pass.
+- Kept Marketplace libraries and their local support data outside Git.
+- Next: pull before opening Unreal on the other workstation, then validate the
+  updated house, city materials and both levels before further edits.
